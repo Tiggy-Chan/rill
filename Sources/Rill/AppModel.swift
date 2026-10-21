@@ -132,6 +132,18 @@ final class AppModel {
 
         monitor.onChange = { [weak self] in self?.updatePlayback() }
         wallpaper.onVisibilityChange = { [weak self] in self?.updatePlayback() }
+        engine.onFailure = { [weak self] in self?.handlePlaybackFailure() }
+    }
+
+    /// Called when something needs the user's attention, e.g. a video that can't be played.
+    @ObservationIgnored var onProblem: (() -> Void)?
+
+    private func handlePlaybackFailure() {
+        guard let name = video?.name else { return }
+        // Also forgets the file, so the next launch doesn't retry it.
+        clearVideo()
+        problem = "无法播放「\(name)」，文件可能已损坏或格式不受支持。"
+        onProblem?()
     }
 
     func restoreLastVideo() {

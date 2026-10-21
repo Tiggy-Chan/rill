@@ -12,6 +12,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         let controller = StatusItemController(model: model)
         statusItemController = controller
+        model.onProblem = { [weak controller] in controller?.showPanel() }
         if model.video == nil {
             // Let the status item settle in the menu bar before anchoring the panel to it.
             Task { controller.showPanel() }

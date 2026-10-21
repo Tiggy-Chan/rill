@@ -1,30 +1,117 @@
-import Foundation
+import AVFoundation
+import Observation
+
+struct VideoInfo: Equatable {
+    let url: URL
+    var pixelSize: CGSize?
+    var duration: Double?
+
+    var name: String { url.lastPathComponent }
+
+    var summary: String {
+        var parts: [String] = []
+        if let pixelSize {
+            parts.append("\(Int(pixelSize.width)) × \(Int(pixelSize.height))")
+        }
+        if let duration, duration.isFinite {
+            parts.append(Duration.seconds(duration.rounded()).formatted(.time(pattern: .minuteSecond)))
+        }
+        return parts.isEmpty ? "—" : parts.joined(separator: " · ")
+    }
+}
+
+enum FillMode: String, CaseIterable, Identifiable {
+    case fill, fit, stretch
+
+    var id: Self { self }
+
+    var title: String {
+        switch self {
+        case .fill: "填充"
+        case .fit: "适应"
+        case .stretch: "拉伸"
+        }
+    }
+
+    var videoGravity: AVLayerVideoGravity {
+        switch self {
+        case .fill: .resizeAspectFill
+        case .fit: .resizeAspect
+        case .stretch: .resize
+        }
+    }
+}
+
+enum PlaybackStatus: Equatable {
+    case idle
+    case playing
+    case paused
+}
 
 @MainActor
+@Observable
 final class AppModel {
-    private(set) var videoURL: URL?
+    private(set) var video: VideoInfo?
     private(set) var isPaused = false
+
+    var isMuted = true {
+        didSet { engine.player.isMuted = isMuted }
+    }
+
+    var volume: Float = 0.6 {
+        didSet { engine.player.volume = volume }
+    }
+
+    var fillMode: FillMode = .fill {
+        didSet { wallpaper.videoGravity = fillMode.videoGravity }
+    }
+
+    var status: PlaybackStatus {
+        guard video != nil else { return .idle }
+        return isPaused ? .paused : .playing
+    }
+
+    var player: AVPlayer { engine.player }
 
     private let engine: PlaybackEngine
     private let wallpaper: WallpaperController
+    @ObservationIgnored private var metadataTask: Task<Void, Never>?
 
     init() {
         engine = PlaybackEngine()
         wallpaper = WallpaperController(player: engine.player)
+        engine.player.isMuted = isMuted
+        engine.player.volume = volume
     }
 
     func setVideo(_ url: URL) {
         engine.load(url)
-        videoURL = url
+        video = VideoInfo(url: url)
         isPaused = false
         wallpaper.show()
         applyPlaybackState()
+        loadMetadata(for: url)
+    }
+
+    func clearVideo() {
+        metadataTask?.cancel()
+        engine.unload()
+        wallpaper.hide()
+        video = nil
+        isPaused = false
     }
 
     func togglePause() {
-        guard videoURL != nil else { return }
+        guard video != nil else { return }
         isPaused.toggle()
         applyPlaybackState()
+    }
+
+    func toggleMute() {
+        if isMuted && volume == 0 {
+            volume = 0.5
+        }
+        isMuted.toggle()
     }
 
     private func applyPlaybackState() {
@@ -32,6 +119,23 @@ final class AppModel {
             engine.pause()
         } else {
             engine.play()
+        }
+    }
+
+    private func loadMetadata(for url: URL) {
+        metadataTask?.cancel()
+        metadataTask = Task { [weak self] in
+            let asset = AVURLAsset(url: url)
+            let duration = try? await asset.load(.duration)
+            var pixelSize: CGSize?
+            if let track = try? await asset.loadTracks(withMediaType: .video).first,
+               let geometry = try? await track.load(.naturalSize, .preferredTransform) {
+                let rect = CGRect(origin: .zero, size: geometry.0).applying(geometry.1)
+                pixelSize = CGSize(width: abs(rect.width), height: abs(rect.height))
+            }
+            guard !Task.isCancelled, let self, self.video?.url == url else { return }
+            self.video?.pixelSize = pixelSize
+            self.video?.duration = duration.map(CMTimeGetSeconds)
         }
     }
 }

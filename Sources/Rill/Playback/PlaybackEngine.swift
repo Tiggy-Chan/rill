@@ -8,14 +8,20 @@ final class PlaybackEngine {
     init() {
         player = AVQueuePlayer()
         player.isMuted = true
+        player.allowsExternalPlayback = false
         // A wallpaper must never keep the display awake.
         player.preventsDisplaySleepDuringVideoPlayback = false
     }
 
     func load(_ url: URL) {
-        looper?.disableLooping()
-        player.removeAllItems()
+        unload()
         looper = AVPlayerLooper(player: player, templateItem: AVPlayerItem(url: url))
+    }
+
+    func unload() {
+        looper?.disableLooping()
+        looper = nil
+        player.removeAllItems()
     }
 
     func play() {

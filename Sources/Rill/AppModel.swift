@@ -53,17 +53,27 @@ enum PlaybackStatus: Equatable {
 final class AppModel {
     private(set) var video: VideoInfo?
     private(set) var isPaused = false
+    private(set) var problem: String?
 
     var isMuted = true {
-        didSet { engine.player.isMuted = isMuted }
+        didSet {
+            engine.player.isMuted = isMuted
+            settings.isMuted = isMuted
+        }
     }
 
     var volume: Float = 0.6 {
-        didSet { engine.player.volume = volume }
+        didSet {
+            engine.player.volume = volume
+            settings.volume = volume
+        }
     }
 
     var fillMode: FillMode = .fill {
-        didSet { wallpaper.videoGravity = fillMode.videoGravity }
+        didSet {
+            wallpaper.videoGravity = fillMode.videoGravity
+            settings.fillMode = fillMode
+        }
     }
 
     var status: PlaybackStatus {
@@ -73,21 +83,41 @@ final class AppModel {
 
     var player: AVPlayer { engine.player }
 
+    private let settings: SettingsStore
     private let engine: PlaybackEngine
     private let wallpaper: WallpaperController
     @ObservationIgnored private var metadataTask: Task<Void, Never>?
 
-    init() {
+    init(settings: SettingsStore = SettingsStore()) {
+        self.settings = settings
         engine = PlaybackEngine()
         wallpaper = WallpaperController(player: engine.player)
+        // Property observers don't run during init, so apply stored values directly.
+        isMuted = settings.isMuted
+        volume = settings.volume
+        fillMode = settings.fillMode
         engine.player.isMuted = isMuted
         engine.player.volume = volume
+        wallpaper.videoGravity = fillMode.videoGravity
+    }
+
+    func restoreLastVideo() {
+        switch settings.loadVideo() {
+        case .none:
+            break
+        case .available(let url):
+            setVideo(url)
+        case .missing(let name):
+            problem = "找不到上次使用的视频「\(name)」，它可能被移动或删除了。"
+        }
     }
 
     func setVideo(_ url: URL) {
         engine.load(url)
         video = VideoInfo(url: url)
         isPaused = false
+        problem = nil
+        settings.saveVideo(url)
         wallpaper.show()
         applyPlaybackState()
         loadMetadata(for: url)
@@ -99,6 +129,8 @@ final class AppModel {
         wallpaper.hide()
         video = nil
         isPaused = false
+        problem = nil
+        settings.saveVideo(nil)
     }
 
     func togglePause() {

@@ -6,6 +6,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItemController: StatusItemController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // A video passed at launch (Finder "Open With", `open -a`) arrives before this and wins.
+        if model.video == nil {
+            model.restoreLastVideo()
+        }
         let controller = StatusItemController(model: model)
         statusItemController = controller
         if model.video == nil {

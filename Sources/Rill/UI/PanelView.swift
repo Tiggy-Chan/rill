@@ -10,6 +10,9 @@ struct PanelView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             header
+            if let problem = model.problem {
+                ProblemBanner(message: problem)
+            }
             PreviewCard(model: model, chooseVideo: chooseVideo)
             if let video = model.video {
                 details(for: video)
@@ -118,6 +121,25 @@ struct PanelView: View {
         .buttonStyle(.borderless)
         .font(.callout)
         .foregroundStyle(.secondary)
+    }
+}
+
+private struct ProblemBanner: View {
+    let message: String
+
+    var body: some View {
+        Label {
+            Text(message)
+                .fixedSize(horizontal: false, vertical: true)
+        } icon: {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.orange)
+        }
+        .font(.caption)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 }
 

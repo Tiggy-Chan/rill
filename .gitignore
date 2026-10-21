@@ -1,0 +1,7 @@
+.build/
+.swiftpm/
+build/
+*.mp4
+*.mov
+*.m4v
+.DS_Store

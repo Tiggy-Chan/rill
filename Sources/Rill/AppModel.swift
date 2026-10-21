@@ -46,14 +46,37 @@ enum PlaybackStatus: Equatable {
     case idle
     case playing
     case paused
+    case autoPaused(PauseReason)
+}
+
+extension PauseReason {
+    var explanation: String {
+        switch self {
+        case .user: "已暂停"
+        case .screensAsleep: "显示器已休眠"
+        case .sessionInactive: "屏幕已锁定"
+        case .hidden: "壁纸被窗口完全遮挡"
+        case .battery: "正在使用电池"
+        case .lowPower: "低电量模式已开启"
+        }
+    }
 }
 
 @MainActor
 @Observable
 final class AppModel {
     private(set) var video: VideoInfo?
+    /// The user's own pause; system conditions are tracked separately in `autoPauseReason`.
     private(set) var isPaused = false
+    private(set) var autoPauseReason: PauseReason?
     private(set) var problem: String?
+
+    var pauseWhenSavingPower = true {
+        didSet {
+            settings.pauseWhenSavingPower = pauseWhenSavingPower
+            updatePlayback()
+        }
+    }
 
     var isMuted = true {
         didSet {
@@ -78,7 +101,9 @@ final class AppModel {
 
     var status: PlaybackStatus {
         guard video != nil else { return .idle }
-        return isPaused ? .paused : .playing
+        if isPaused { return .paused }
+        if let autoPauseReason { return .autoPaused(autoPauseReason) }
+        return .playing
     }
 
     var player: AVPlayer { engine.player }
@@ -86,19 +111,25 @@ final class AppModel {
     private let settings: SettingsStore
     private let engine: PlaybackEngine
     private let wallpaper: WallpaperController
+    private let monitor: SystemMonitor
     @ObservationIgnored private var metadataTask: Task<Void, Never>?
 
     init(settings: SettingsStore = SettingsStore()) {
         self.settings = settings
         engine = PlaybackEngine()
         wallpaper = WallpaperController(player: engine.player)
+        monitor = SystemMonitor()
         // Property observers don't run during init, so apply stored values directly.
         isMuted = settings.isMuted
         volume = settings.volume
         fillMode = settings.fillMode
+        pauseWhenSavingPower = settings.pauseWhenSavingPower
         engine.player.isMuted = isMuted
         engine.player.volume = volume
         wallpaper.videoGravity = fillMode.videoGravity
+
+        monitor.onChange = { [weak self] in self?.updatePlayback() }
+        wallpaper.onVisibilityChange = { [weak self] in self?.updatePlayback() }
     }
 
     func restoreLastVideo() {
@@ -119,7 +150,7 @@ final class AppModel {
         problem = nil
         settings.saveVideo(url)
         wallpaper.show()
-        applyPlaybackState()
+        updatePlayback()
         loadMetadata(for: url)
     }
 
@@ -129,6 +160,7 @@ final class AppModel {
         wallpaper.hide()
         video = nil
         isPaused = false
+        autoPauseReason = nil
         problem = nil
         settings.saveVideo(nil)
     }
@@ -136,7 +168,7 @@ final class AppModel {
     func togglePause() {
         guard video != nil else { return }
         isPaused.toggle()
-        applyPlaybackState()
+        updatePlayback()
     }
 
     func toggleMute() {
@@ -146,11 +178,26 @@ final class AppModel {
         isMuted.toggle()
     }
 
-    private func applyPlaybackState() {
-        if isPaused {
-            engine.pause()
-        } else {
+    private func updatePlayback() {
+        guard video != nil else {
+            autoPauseReason = nil
+            return
+        }
+        let conditions = PlaybackConditions(
+            userPaused: isPaused,
+            screensAsleep: monitor.screensAsleep,
+            sessionActive: monitor.isSessionActive,
+            wallpaperVisible: wallpaper.isVisible,
+            onBattery: monitor.isOnBattery,
+            lowPowerMode: monitor.isLowPowerMode,
+            pauseWhenSavingPower: pauseWhenSavingPower
+        )
+        let reason = PlaybackPolicy.pauseReason(for: conditions)
+        autoPauseReason = reason == .user ? nil : reason
+        if reason == nil {
             engine.play()
+        } else {
+            engine.pause()
         }
     }
 

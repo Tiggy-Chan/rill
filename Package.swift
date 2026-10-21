@@ -6,5 +6,6 @@ let package = Package(
     platforms: [.macOS(.v14)],
     targets: [
         .executableTarget(name: "Rill", path: "Sources/Rill"),
+        .testTarget(name: "RillTests", dependencies: ["Rill"], path: "Tests/RillTests"),
     ]
 )

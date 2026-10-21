@@ -18,6 +18,7 @@ struct PanelView: View {
                 details(for: video)
                 playbackControls
                 fillModeRow
+                powerRow
             }
             Divider()
             footer
@@ -49,7 +50,26 @@ struct PanelView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
+            if case .autoPaused(let reason) = model.status {
+                Label("\(reason.explanation)，已自动暂停", systemImage: "moon.zzz.fill")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .padding(.top, 4)
+            }
         }
+    }
+
+    private var powerRow: some View {
+        HStack {
+            Text("用电池或低电量模式时暂停")
+                .foregroundStyle(.secondary)
+            Spacer()
+            Toggle("用电池或低电量模式时暂停", isOn: $model.pauseWhenSavingPower)
+                .toggleStyle(.switch)
+                .controlSize(.mini)
+                .labelsHidden()
+        }
+        .font(.callout)
     }
 
     private var playbackControls: some View {
@@ -212,6 +232,7 @@ private struct StatusBadge: View {
         case .idle: "未设置"
         case .playing: "播放中"
         case .paused: "已暂停"
+        case .autoPaused: "自动暂停"
         }
     }
 
@@ -220,6 +241,7 @@ private struct StatusBadge: View {
         case .idle: .secondary
         case .playing: .green
         case .paused: .orange
+        case .autoPaused: .yellow
         }
     }
 }

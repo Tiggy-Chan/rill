@@ -19,6 +19,12 @@ struct SettingsStore {
         static let volume = "volume"
         static let isMuted = "isMuted"
         static let fillMode = "fillMode"
+        static let pauseWhenSavingPower = "pauseWhenSavingPower"
+    }
+
+    var pauseWhenSavingPower: Bool {
+        get { defaults.object(forKey: Key.pauseWhenSavingPower) == nil ? true : defaults.bool(forKey: Key.pauseWhenSavingPower) }
+        nonmutating set { defaults.set(newValue, forKey: Key.pauseWhenSavingPower) }
     }
 
     var volume: Float {

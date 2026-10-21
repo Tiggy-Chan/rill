@@ -20,6 +20,7 @@ struct PanelView: View {
                 fillModeRow
                 powerRow
             }
+            launchAtLoginRow
             Divider()
             footer
         }
@@ -123,6 +124,29 @@ struct PanelView: View {
             .pickerStyle(.segmented)
             .labelsHidden()
             .fixedSize()
+        }
+        .font(.callout)
+    }
+
+    private var launchAtLoginRow: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text("登录时启动")
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Toggle("登录时启动", isOn: Binding(
+                    get: { model.launchAtLogin == .enabled || model.launchAtLogin == .requiresApproval },
+                    set: { model.setLaunchAtLogin($0) }
+                ))
+                .toggleStyle(.switch)
+                .controlSize(.mini)
+                .labelsHidden()
+            }
+            if model.launchAtLogin == .requiresApproval {
+                Button("需要在系统设置中允许 Rill 登录时启动…", action: model.openLoginItemsSettings)
+                    .buttonStyle(.link)
+                    .font(.caption)
+            }
         }
         .font(.callout)
     }

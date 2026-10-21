@@ -1,5 +1,6 @@
 import AVFoundation
 import Observation
+import ServiceManagement
 
 struct VideoInfo: Equatable {
     let url: URL
@@ -70,6 +71,7 @@ final class AppModel {
     private(set) var isPaused = false
     private(set) var autoPauseReason: PauseReason?
     private(set) var problem: String?
+    private(set) var launchAtLogin: SMAppService.Status = SMAppService.mainApp.status
 
     var pauseWhenSavingPower = true {
         didSet {
@@ -169,6 +171,29 @@ final class AppModel {
         guard video != nil else { return }
         isPaused.toggle()
         updatePlayback()
+    }
+
+    func setLaunchAtLogin(_ enabled: Bool) {
+        let service = SMAppService.mainApp
+        do {
+            if enabled {
+                try service.register()
+            } else {
+                try service.unregister()
+            }
+        } catch {
+            problem = "无法更改登录时启动：\(error.localizedDescription)"
+        }
+        refreshLaunchAtLogin()
+    }
+
+    /// Login items can be changed in System Settings while the app runs, so re-read when the panel opens.
+    func refreshLaunchAtLogin() {
+        launchAtLogin = SMAppService.mainApp.status
+    }
+
+    func openLoginItemsSettings() {
+        SMAppService.openSystemSettingsLoginItems()
     }
 
     func toggleMute() {

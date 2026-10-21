@@ -35,6 +35,7 @@ final class StatusItemController: NSObject, NSPopoverDelegate, NSWindowDelegate,
             }
             return
         }
+        model.refreshLaunchAtLogin()
         NSApp.activate()
         popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
         popover.contentViewController?.view.window?.makeKey()

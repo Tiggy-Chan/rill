@@ -1,0 +1,43 @@
+/* Status */
+"Not Set" = "Not Set";
+"Playing" = "Playing";
+"Paused" = "Paused";
+"Auto-Paused" = "Auto-Paused";
+"Paused while the displays are asleep" = "Paused while the displays are asleep";
+"Paused while the screen is locked" = "Paused while the screen is locked";
+"Paused while windows cover the wallpaper" = "Paused while windows cover the wallpaper";
+"Paused while on battery power" = "Paused while on battery power";
+"Paused while Low Power Mode is on" = "Paused while Low Power Mode is on";
+
+/* Playback controls */
+"Pause" = "Pause";
+"Resume" = "Resume";
+"Mute" = "Mute";
+"Unmute" = "Unmute";
+"Volume" = "Volume";
+"Scaling" = "Scaling";
+"Fill" = "Fill";
+"Fit" = "Fit";
+"Stretch" = "Stretch";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "Pause on battery or in Low Power Mode";
+"Launch at login" = "Launch at login";
+"Allow Rill in System Settings…" = "Allow Rill in System Settings…";
+
+/* Video */
+"Choose Video…" = "Choose Video…";
+"Change Video…" = "Change Video…";
+"Change Video" = "Change Video";
+"Choose a Video" = "Choose a Video";
+"or drop one on the menu bar icon" = "or drop one on the menu bar icon";
+"Remove" = "Remove";
+"Turn off the video wallpaper and show the system wallpaper" = "Turn off the video wallpaper and show the system wallpaper";
+"Quit" = "Quit";
+"Choose a video for your desktop wallpaper" = "Choose a video for your desktop wallpaper";
+"Set as Wallpaper" = "Set as Wallpaper";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Can't find “%@”, the video you used last time. It may have been moved or deleted.";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "Can't play “%@”. The file may be damaged or in an unsupported format.";
+"Couldn't change Launch at Login: %@" = "Couldn't change Launch at Login: %@";

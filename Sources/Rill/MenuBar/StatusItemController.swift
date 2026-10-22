@@ -95,8 +95,8 @@ final class StatusItemController: NSObject, NSPopoverDelegate, NSWindowDelegate,
         panel.allowedContentTypes = [.movie]
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
-        panel.message = "选择一段视频作为桌面壁纸"
-        panel.prompt = "设为壁纸"
+        panel.message = L10n.openPanelMessage
+        panel.prompt = L10n.setAsWallpaper
         panel.directoryURL = model.video?.url.deletingLastPathComponent()
         NSApp.activate()
         if panel.runModal() == .OK, let url = panel.url {

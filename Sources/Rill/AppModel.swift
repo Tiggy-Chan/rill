@@ -28,9 +28,9 @@ enum FillMode: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .fill: "填充"
-        case .fit: "适应"
-        case .stretch: "拉伸"
+        case .fill: L10n.fill
+        case .fit: L10n.fit
+        case .stretch: L10n.stretch
         }
     }
 
@@ -53,12 +53,12 @@ enum PlaybackStatus: Equatable {
 extension PauseReason {
     var explanation: String {
         switch self {
-        case .user: "已暂停"
-        case .screensAsleep: "显示器已休眠"
-        case .sessionInactive: "屏幕已锁定"
-        case .hidden: "壁纸被窗口完全遮挡"
-        case .battery: "正在使用电池"
-        case .lowPower: "低电量模式已开启"
+        case .user: L10n.paused
+        case .screensAsleep: L10n.pausedDisplaysAsleep
+        case .sessionInactive: L10n.pausedScreenLocked
+        case .hidden: L10n.pausedCovered
+        case .battery: L10n.pausedOnBattery
+        case .lowPower: L10n.pausedLowPower
         }
     }
 }
@@ -142,7 +142,7 @@ final class AppModel {
         guard let name = video?.name else { return }
         // Also forgets the file, so the next launch doesn't retry it.
         clearVideo()
-        problem = "无法播放「\(name)」，文件可能已损坏或格式不受支持。"
+        problem = L10n.cantPlay(name)
         onProblem?()
     }
 
@@ -153,7 +153,7 @@ final class AppModel {
         case .available(let url):
             setVideo(url)
         case .missing(let name):
-            problem = "找不到上次使用的视频「\(name)」，它可能被移动或删除了。"
+            problem = L10n.cantFindLastVideo(name)
         }
     }
 
@@ -194,7 +194,7 @@ final class AppModel {
                 try service.unregister()
             }
         } catch {
-            problem = "无法更改登录时启动：\(error.localizedDescription)"
+            problem = L10n.cantChangeLaunchAtLogin(error.localizedDescription)
         }
         refreshLaunchAtLogin()
     }

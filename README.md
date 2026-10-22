@@ -4,8 +4,6 @@
 
 A small native macOS app that plays a video as your desktop wallpaper. It lives in the menu bar, stays out of your way, and pauses itself when nobody can see it.
 
-> The interface is currently in Simplified Chinese. The labels are translated in [Usage](#usage) below.
-
 ## Features
 
 - **Live wallpaper on every display.** The video sits above the system wallpaper and below your desktop icons. It shows on every Space and never catches mouse clicks. You can connect or remove displays while it runs.
@@ -15,6 +13,7 @@ A small native macOS app that plays a video as your desktop wallpaper. It lives 
 - **Pauses when it can't be seen.** Playback stops while the displays sleep, while the screen is locked, or while other windows fully cover the wallpaper. It can also pause on battery power or in Low Power Mode.
 - **Remembers your choice.** Your video and settings come back on the next launch, even if you renamed or moved the file.
 - **Optional launch at login.** It is off by default.
+- **Follows your system language.** The interface appears in English or Simplified Chinese to match macOS.
 - **Private by design.** Rill makes no network connections and collects no data. Settings stay in the local preferences domain `com.tiggychan.rill`.
 
 ## Requirements
@@ -39,15 +38,15 @@ The app is ad-hoc signed and not notarized. It opens normally on the Mac that bu
 ## Usage
 
 1. Click the drop icon in the menu bar to open the panel.
-2. Click **选择视频…** (Choose Video…) or the preview area, or drop a video onto the menu bar icon.
+2. Click **Choose Video…** or the preview area, or drop a video onto the menu bar icon.
 3. Adjust the wallpaper from the panel:
    - Play/pause button, mute button and volume slider
-   - **画面** (Scaling): **填充** Fill · **适应** Fit · **拉伸** Stretch
-   - **用电池或低电量模式时暂停**: pause on battery or in Low Power Mode
-   - **登录时启动**: launch at login
+   - **Scaling**: Fill · Fit · Stretch
+   - **Pause on battery or in Low Power Mode**
+   - **Launch at login**
 4. Close the panel by clicking anywhere else or pressing Esc.
 
-**更换视频…** (Change Video…) picks another file. **移除** (Remove) turns the video wallpaper off. **退出** (Quit) closes the app. Rill never changes your system wallpaper setting, so removing the video or quitting brings your normal wallpaper back.
+**Change Video…** picks another file. **Remove** turns the video wallpaper off. **Quit** closes the app. Rill never changes your system wallpaper setting, so removing the video or quitting brings your normal wallpaper back.
 
 Rill plays any format AVFoundation supports, such as H.264 or HEVC in `.mp4`, `.mov` or `.m4v` files. With Fill, a video that matches your screen's aspect ratio shows the most of the frame.
 
@@ -74,7 +73,7 @@ Sources/Rill/
 
 ## Uninstall
 
-1. If **登录时启动** (launch at login) is on, turn it off in the panel.
+1. If **Launch at login** is on, turn it off in the panel.
 2. Quit Rill and delete `Rill.app`.
 3. Optionally, remove its settings: `defaults delete com.tiggychan.rill`
 

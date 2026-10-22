@@ -1,0 +1,43 @@
+/* Status */
+"Not Set" = "未设置";
+"Playing" = "播放中";
+"Paused" = "已暂停";
+"Auto-Paused" = "自动暂停";
+"Paused while the displays are asleep" = "显示器休眠中，已自动暂停";
+"Paused while the screen is locked" = "屏幕已锁定，已自动暂停";
+"Paused while windows cover the wallpaper" = "壁纸被窗口完全遮挡，已自动暂停";
+"Paused while on battery power" = "正在使用电池，已自动暂停";
+"Paused while Low Power Mode is on" = "低电量模式已开启，已自动暂停";
+
+/* Playback controls */
+"Pause" = "暂停";
+"Resume" = "继续播放";
+"Mute" = "静音";
+"Unmute" = "取消静音";
+"Volume" = "音量";
+"Scaling" = "画面";
+"Fill" = "填充";
+"Fit" = "适应";
+"Stretch" = "拉伸";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "用电池或低电量模式时暂停";
+"Launch at login" = "登录时启动";
+"Allow Rill in System Settings…" = "需要在系统设置中允许 Rill 登录时启动…";
+
+/* Video */
+"Choose Video…" = "选择视频…";
+"Change Video…" = "更换视频…";
+"Change Video" = "更换视频";
+"Choose a Video" = "选择一段视频";
+"or drop one on the menu bar icon" = "或把视频拖到菜单栏图标上";
+"Remove" = "移除";
+"Turn off the video wallpaper and show the system wallpaper" = "停用视频壁纸，恢复系统壁纸";
+"Quit" = "退出";
+"Choose a video for your desktop wallpaper" = "选择一段视频作为桌面壁纸";
+"Set as Wallpaper" = "设为壁纸";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "找不到上次使用的视频「%@」，它可能被移动或删除了。";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "无法播放「%@」，文件可能已损坏或格式不受支持。";
+"Couldn't change Launch at Login: %@" = "无法更改登录时启动：%@";

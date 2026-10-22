@@ -52,7 +52,7 @@ struct PanelView: View {
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
             if case .autoPaused(let reason) = model.status {
-                Label("\(reason.explanation)，已自动暂停", systemImage: "moon.zzz.fill")
+                Label(reason.explanation, systemImage: "moon.zzz.fill")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .padding(.top, 4)
@@ -62,10 +62,10 @@ struct PanelView: View {
 
     private var powerRow: some View {
         HStack {
-            Text("用电池或低电量模式时暂停")
+            Text(L10n.pauseOnBattery)
                 .foregroundStyle(.secondary)
             Spacer()
-            Toggle("用电池或低电量模式时暂停", isOn: $model.pauseWhenSavingPower)
+            Toggle(L10n.pauseOnBattery, isOn: $model.pauseWhenSavingPower)
                 .toggleStyle(.switch)
                 .controlSize(.mini)
                 .labelsHidden()
@@ -83,8 +83,8 @@ struct PanelView: View {
                     .contentShape(Circle())
             }
             .buttonStyle(.plain)
-            .help(model.isPaused ? "继续播放" : "暂停")
-            .accessibilityLabel(model.isPaused ? "继续播放" : "暂停")
+            .help(model.isPaused ? L10n.resume : L10n.pause)
+            .accessibilityLabel(model.isPaused ? L10n.resume : L10n.pause)
 
             Button(action: model.toggleMute) {
                 Image(systemName: model.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill")
@@ -94,8 +94,8 @@ struct PanelView: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .help(model.isMuted ? "取消静音" : "静音")
-            .accessibilityLabel(model.isMuted ? "取消静音" : "静音")
+            .help(model.isMuted ? L10n.unmute : L10n.mute)
+            .accessibilityLabel(model.isMuted ? L10n.unmute : L10n.mute)
 
             VolumeSlider(value: volumeBinding)
         }
@@ -113,10 +113,10 @@ struct PanelView: View {
 
     private var fillModeRow: some View {
         HStack {
-            Text("画面")
+            Text(L10n.scaling)
                 .foregroundStyle(.secondary)
             Spacer()
-            Picker("画面", selection: $model.fillMode) {
+            Picker(L10n.scaling, selection: $model.fillMode) {
                 ForEach(FillMode.allCases) { mode in
                     Text(mode.title).tag(mode)
                 }
@@ -131,10 +131,10 @@ struct PanelView: View {
     private var launchAtLoginRow: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text("登录时启动")
+                Text(L10n.launchAtLogin)
                     .foregroundStyle(.secondary)
                 Spacer()
-                Toggle("登录时启动", isOn: Binding(
+                Toggle(L10n.launchAtLogin, isOn: Binding(
                     get: { model.launchAtLogin == .enabled || model.launchAtLogin == .requiresApproval },
                     set: { model.setLaunchAtLogin($0) }
                 ))
@@ -143,7 +143,7 @@ struct PanelView: View {
                 .labelsHidden()
             }
             if model.launchAtLogin == .requiresApproval {
-                Button("需要在系统设置中允许 Rill 登录时启动…", action: model.openLoginItemsSettings)
+                Button(L10n.allowInSystemSettings, action: model.openLoginItemsSettings)
                     .buttonStyle(.link)
                     .font(.caption)
             }
@@ -153,13 +153,13 @@ struct PanelView: View {
 
     private var footer: some View {
         HStack(spacing: 14) {
-            Button(model.video == nil ? "选择视频…" : "更换视频…", action: chooseVideo)
+            Button(model.video == nil ? L10n.chooseVideo : L10n.changeVideo, action: chooseVideo)
             if model.video != nil {
-                Button("移除", action: model.clearVideo)
-                    .help("停用视频壁纸，恢复系统壁纸")
+                Button(L10n.remove, action: model.clearVideo)
+                    .help(L10n.removeHelp)
             }
             Spacer()
-            Button("退出", action: quit)
+            Button(L10n.quit, action: quit)
                 .keyboardShortcut("q")
         }
         .buttonStyle(.borderless)
@@ -221,7 +221,7 @@ private struct VolumeSlider: View {
         }
         .frame(height: 18)
         .accessibilityElement()
-        .accessibilityLabel("音量")
+        .accessibilityLabel(L10n.volume)
         .accessibilityValue("\(Int((value * 100).rounded()))%")
         .accessibilityAdjustableAction { direction in
             switch direction {
@@ -253,10 +253,10 @@ private struct StatusBadge: View {
 
     private var title: String {
         switch status {
-        case .idle: "未设置"
-        case .playing: "播放中"
-        case .paused: "已暂停"
-        case .autoPaused: "自动暂停"
+        case .idle: L10n.notSet
+        case .playing: L10n.playing
+        case .paused: L10n.paused
+        case .autoPaused: L10n.autoPaused
         }
     }
 
@@ -298,13 +298,13 @@ private struct PreviewCard: View {
         }
         .buttonStyle(.plain)
         .onHover { isHovering = $0 }
-        .accessibilityLabel(model.video == nil ? "选择视频" : "更换视频")
+        .accessibilityLabel(model.video == nil ? L10n.chooseAVideo : L10n.changeVideoShort)
     }
 
     private var changeOverlay: some View {
         ZStack {
             Color.black.opacity(0.25)
-            Label("更换视频", systemImage: "arrow.triangle.2.circlepath")
+            Label(L10n.changeVideoShort, systemImage: "arrow.triangle.2.circlepath")
                 .font(.callout.weight(.medium))
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
@@ -323,9 +323,9 @@ private struct PreviewCard: View {
                     .font(.system(size: 26, weight: .light))
                     .foregroundStyle(.secondary)
                     .padding(.bottom, 2)
-                Text("选择一段视频")
+                Text(L10n.chooseAVideo)
                     .font(.callout.weight(.medium))
-                Text("或把视频拖到菜单栏图标上")
+                Text(L10n.orDropOnIcon)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

@@ -45,7 +45,7 @@ struct PanelView: View {
                 .font(.callout.weight(.medium))
                 .lineLimit(1)
                 .truncationMode(.middle)
-                .help(video.url.path)
+                .help(video.name)
             Text(video.summary)
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -84,6 +84,19 @@ struct PanelView: View {
             .accessibilityLabel(model.isMuted ? L10n.unmute : L10n.mute)
 
             VolumeSlider(value: volumeBinding)
+
+            if model.canShowNext {
+                Button(action: model.showNext) {
+                    Image(systemName: "forward.end.fill")
+                        .font(.system(size: 12))
+                        .foregroundStyle(.secondary)
+                        .frame(width: 22, height: 22)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .help(L10n.nextVideo)
+                .accessibilityLabel(L10n.nextVideo)
+            }
         }
     }
 
@@ -118,7 +131,7 @@ struct PanelView: View {
         HStack(spacing: 14) {
             Button(model.video == nil ? L10n.chooseVideo : L10n.changeVideo, action: chooseVideo)
             if model.video != nil {
-                Button(L10n.remove, action: model.clearVideo)
+                Button(L10n.remove, action: model.removeCurrent)
                     .help(L10n.removeHelp)
             }
             Spacer()
@@ -250,7 +263,7 @@ private struct PreviewCard: View {
         Button(action: chooseVideo) {
             ZStack {
                 if model.video != nil {
-                    PlayerPreview(player: model.player, gravity: model.fillMode)
+                    PlayerPreview(player: model.previewPlayer, gravity: model.fillMode)
                     if isHovering {
                         changeOverlay
                     }
@@ -308,7 +321,7 @@ private struct PreviewCard: View {
 }
 
 private struct PlayerPreview: NSViewRepresentable {
-    let player: AVPlayer
+    let player: AVPlayer?
     let gravity: FillMode
 
     func makeNSView(context: Context) -> PlayerView {
@@ -316,6 +329,9 @@ private struct PlayerPreview: NSViewRepresentable {
     }
 
     func updateNSView(_ view: PlayerView, context: Context) {
+        if view.player !== player {
+            view.player = player
+        }
         view.videoGravity = gravity.videoGravity
     }
 }

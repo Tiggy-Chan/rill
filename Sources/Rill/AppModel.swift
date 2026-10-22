@@ -1,13 +1,13 @@
+import AppKit
 import AVFoundation
 import Observation
 import ServiceManagement
 
 struct VideoInfo: Equatable {
-    let url: URL
+    let id: UUID
+    let name: String
     var pixelSize: CGSize?
     var duration: Double?
-
-    var name: String { url.lastPathComponent }
 
     var summary: String {
         var parts: [String] = []
@@ -66,12 +66,21 @@ extension PauseReason {
 @MainActor
 @Observable
 final class AppModel {
+    private(set) var library: [LibraryItem] = []
+    /// The main video: shown on every display without its own choice, and the one rotation advances.
+    private(set) var currentItemID: UUID?
     private(set) var video: VideoInfo?
+    private(set) var previewPlayer: AVPlayer?
+    private(set) var displays: [DisplayInfo] = []
+    private(set) var displayOverrides: [String: UUID] = [:]
+
     /// The user's own pause; system conditions are tracked separately in `autoPauseReason`.
     private(set) var isPaused = false
     private(set) var autoPauseReason: PauseReason?
     private(set) var problem: String?
     private(set) var launchAtLogin: SMAppService.Status = SMAppService.mainApp.status
+    private(set) var pauseShortcut: KeyShortcut?
+    private(set) var nextShortcut: KeyShortcut?
 
     var pauseWhenSavingPower = true {
         didSet {
@@ -82,15 +91,15 @@ final class AppModel {
 
     var isMuted = true {
         didSet {
-            engine.player.isMuted = isMuted
             settings.isMuted = isMuted
+            applyAudio()
         }
     }
 
     var volume: Float = 0.6 {
         didSet {
-            engine.player.volume = volume
             settings.volume = volume
+            applyAudio()
         }
     }
 
@@ -101,6 +110,28 @@ final class AppModel {
         }
     }
 
+    var rotationInterval: RotationInterval = .never {
+        didSet {
+            settings.rotationInterval = rotationInterval
+            scheduleRotation()
+        }
+    }
+
+    var shuffle = false {
+        didSet { settings.shuffle = shuffle }
+    }
+
+    var syncLockScreen = false {
+        didSet {
+            settings.syncLockScreen = syncLockScreen
+            if syncLockScreen {
+                updateLockScreen()
+            } else {
+                lockScreen.restore()
+            }
+        }
+    }
+
     var status: PlaybackStatus {
         guard video != nil else { return .idle }
         if isPaused { return .paused }
@@ -108,85 +139,336 @@ final class AppModel {
         return .playing
     }
 
-    var player: AVPlayer { engine.player }
+    var canShowNext: Bool { playableIDs.count > 1 }
+
+    /// Called when something needs the user's attention, e.g. a video that can't be played.
+    @ObservationIgnored var onProblem: (() -> Void)?
+
+    private struct ActivePlayer {
+        let engine: PlaybackEngine
+        let access: SecurityScopedAccess
+    }
 
     private let settings: SettingsStore
-    private let engine: PlaybackEngine
-    private let wallpaper: WallpaperController
-    private let monitor: SystemMonitor
+    private let wallpaper = WallpaperController()
+    private let monitor = SystemMonitor()
+    private let hotKeys = HotKeyCenter()
+    private let lockScreen: LockScreenSync
+    @ObservationIgnored private var resolvedURLs: [UUID: URL] = [:]
+    @ObservationIgnored private var active: [UUID: ActivePlayer] = [:]
+    @ObservationIgnored private var assignment: [String: UUID] = [:]
     @ObservationIgnored private var metadataTask: Task<Void, Never>?
-    @ObservationIgnored private var videoAccess: SecurityScopedAccess?
+    @ObservationIgnored private var rotationTimer: Timer?
 
     init(settings: SettingsStore = SettingsStore()) {
         self.settings = settings
-        engine = PlaybackEngine()
-        wallpaper = WallpaperController(player: engine.player)
-        monitor = SystemMonitor()
+        lockScreen = LockScreenSync(settings: settings)
         // Property observers don't run during init, so apply stored values directly.
         isMuted = settings.isMuted
         volume = settings.volume
         fillMode = settings.fillMode
         pauseWhenSavingPower = settings.pauseWhenSavingPower
-        engine.player.isMuted = isMuted
-        engine.player.volume = volume
+        rotationInterval = settings.rotationInterval
+        shuffle = settings.shuffle
+        syncLockScreen = settings.syncLockScreen
         wallpaper.videoGravity = fillMode.videoGravity
 
         monitor.onChange = { [weak self] in self?.updatePlayback() }
         wallpaper.onVisibilityChange = { [weak self] in self?.updatePlayback() }
-        engine.onFailure = { [weak self] in self?.handlePlaybackFailure() }
-    }
-
-    /// Called when something needs the user's attention, e.g. a video that can't be played.
-    @ObservationIgnored var onProblem: (() -> Void)?
-
-    private func handlePlaybackFailure() {
-        guard let name = video?.name else { return }
-        // Also forgets the file, so the next launch doesn't retry it.
-        clearVideo()
-        problem = L10n.cantPlay(name)
-        onProblem?()
-    }
-
-    func restoreLastVideo() {
-        switch settings.loadVideo() {
-        case .none:
-            break
-        case .available(let url):
-            setVideo(url)
-        case .missing(let name):
-            problem = L10n.cantFindLastVideo(name)
+        wallpaper.onScreensChange = { [weak self] in self?.applyAssignments() }
+        lockScreen.onError = { [weak self] message in self?.problem = message }
+        hotKeys.handler = { [weak self] action in
+            switch action {
+            case .togglePause: self?.togglePause()
+            case .nextVideo: self?.showNext()
+            }
+        }
+        pauseShortcut = settings.pauseShortcut
+        nextShortcut = settings.nextShortcut
+        registerShortcuts()
+        // Covers a quit or crash between turning sync off and the original wallpaper coming back.
+        if !syncLockScreen && !settings.savedWallpapers.isEmpty {
+            lockScreen.restore()
         }
     }
 
-    func setVideo(_ url: URL) {
-        videoAccess = SecurityScopedAccess(url)
-        engine.load(url)
-        video = VideoInfo(url: url)
-        isPaused = false
-        problem = nil
-        settings.saveVideo(url)
-        wallpaper.show()
-        updatePlayback()
-        loadMetadata(for: url)
+    // MARK: - Library
+
+    func restore() {
+        var items: [LibraryItem] = []
+        var missing: [String] = []
+        for var item in settings.library {
+            if let url = item.resolve() {
+                resolvedURLs[item.id] = url
+                items.append(item)
+            } else {
+                missing.append(item.name)
+            }
+        }
+        library = items
+        settings.library = items
+        displayOverrides = settings.displayVideos.filter { resolvedURLs[$0.value] != nil }
+        let saved = settings.currentItemID
+        currentItemID = saved.flatMap { resolvedURLs[$0] != nil ? $0 : nil } ?? library.first?.id
+        if let name = missing.first {
+            problem = L10n.cantFindLastVideo(name)
+        }
+        currentDidChange()
     }
 
-    func clearVideo() {
-        metadataTask?.cancel()
-        engine.unload()
-        videoAccess = nil
-        wallpaper.hide()
-        video = nil
-        isPaused = false
-        autoPauseReason = nil
-        problem = nil
-        settings.saveVideo(nil)
+    /// Adds videos that aren't in the library yet and shows the first of `urls`.
+    func addVideos(_ urls: [URL]) {
+        var firstID: UUID?
+        for url in urls {
+            let path = url.standardizedFileURL.path
+            if let existing = resolvedURLs.first(where: { $0.value.standardizedFileURL.path == path })?.key {
+                firstID = firstID ?? existing
+                continue
+            }
+            guard let item = LibraryItem(url: url) else { continue }
+            library.append(item)
+            resolvedURLs[item.id] = url
+            firstID = firstID ?? item.id
+        }
+        settings.library = library
+        if let firstID {
+            select(firstID)
+        }
     }
+
+    func select(_ id: UUID) {
+        guard resolvedURLs[id] != nil else { return }
+        currentItemID = id
+        isPaused = false
+        problem = nil
+        currentDidChange()
+    }
+
+    func remove(_ id: UUID) {
+        library.removeAll { $0.id == id }
+        resolvedURLs[id] = nil
+        displayOverrides = displayOverrides.filter { $0.value != id }
+        settings.library = library
+        settings.displayVideos = displayOverrides
+        if currentItemID == id {
+            currentItemID = library.first?.id
+            isPaused = false
+        }
+        currentDidChange()
+    }
+
+    func removeCurrent() {
+        if let currentItemID {
+            remove(currentItemID)
+        }
+    }
+
+    func showNext() {
+        guard let next = Rotation.next(after: currentItemID, in: playableIDs, shuffle: shuffle), next != currentItemID else {
+            return
+        }
+        select(next)
+    }
+
+    func setVideo(_ id: UUID?, forDisplay display: String) {
+        displayOverrides[display] = id
+        settings.displayVideos = displayOverrides
+        applyAssignments()
+    }
+
+    private var playableIDs: [UUID] {
+        library.map(\.id).filter { resolvedURLs[$0] != nil }
+    }
+
+    private func currentDidChange() {
+        settings.currentItemID = currentItemID
+        video = currentItemID.flatMap { id in
+            library.first { $0.id == id }.map { VideoInfo(id: id, name: $0.name) }
+        }
+        loadMetadata()
+        scheduleRotation()
+        applyAssignments()
+    }
+
+    // MARK: - Playback
 
     func togglePause() {
         guard video != nil else { return }
         isPaused.toggle()
         updatePlayback()
     }
+
+    func toggleMute() {
+        if isMuted && volume == 0 {
+            volume = 0.5
+        }
+        isMuted.toggle()
+    }
+
+    private func applyAssignments() {
+        let screens = NSScreen.screens
+        displays = screens.compactMap { screen in
+            screen.displayKey.map { DisplayInfo(id: $0, name: screen.localizedName) }
+        }
+        assignment = DisplayAssignment.resolve(
+            displays: displays.map(\.id),
+            overrides: displayOverrides,
+            mainItem: currentItemID,
+            available: Set(resolvedURLs.keys)
+        )
+
+        // One engine per distinct video: displays showing the same video share its decoder.
+        var needed = Set(assignment.values)
+        if let currentItemID, resolvedURLs[currentItemID] != nil {
+            needed.insert(currentItemID)
+        }
+        for id in active.keys where !needed.contains(id) {
+            active.removeValue(forKey: id)?.engine.unload()
+        }
+        for id in needed where active[id] == nil {
+            guard let url = resolvedURLs[id] else { continue }
+            let access = SecurityScopedAccess(url)
+            let engine = PlaybackEngine()
+            engine.onFailure = { [weak self] in self?.handlePlaybackFailure(id) }
+            engine.load(url)
+            active[id] = ActivePlayer(engine: engine, access: access)
+        }
+
+        previewPlayer = currentItemID.flatMap { active[$0]?.engine.player }
+        applyAudio()
+        wallpaper.setPlayers(assignment.compactMapValues { active[$0]?.engine.player })
+        updatePlayback()
+        updateLockScreen()
+    }
+
+    /// Only the main video can be heard, so several displays never play over each other.
+    private func applyAudio() {
+        for (id, player) in active {
+            player.engine.player.isMuted = isMuted || id != currentItemID
+            player.engine.player.volume = volume
+        }
+    }
+
+    private func updatePlayback() {
+        guard video != nil else {
+            autoPauseReason = nil
+            return
+        }
+        let visible = wallpaper.visibleDisplayKeys
+        func conditions(visible: Bool) -> PlaybackConditions {
+            PlaybackConditions(
+                userPaused: isPaused,
+                screensAsleep: monitor.screensAsleep,
+                sessionActive: monitor.isSessionActive,
+                wallpaperVisible: visible,
+                onBattery: monitor.isOnBattery,
+                lowPowerMode: monitor.isLowPowerMode,
+                pauseWhenSavingPower: pauseWhenSavingPower
+            )
+        }
+        let reason = PlaybackPolicy.pauseReason(for: conditions(visible: !visible.isEmpty))
+        autoPauseReason = reason == .user ? nil : reason
+
+        // Each video pauses on its own when every display showing it is covered.
+        for (id, player) in active {
+            let shownSomewhereVisible = assignment.contains { $0.value == id && visible.contains($0.key) }
+            if PlaybackPolicy.pauseReason(for: conditions(visible: shownSomewhereVisible)) == nil {
+                player.engine.play()
+            } else {
+                player.engine.pause()
+            }
+        }
+    }
+
+    private func handlePlaybackFailure(_ id: UUID) {
+        guard let name = library.first(where: { $0.id == id })?.name else { return }
+        // Also forgets the file, so the next launch doesn't retry it.
+        remove(id)
+        problem = L10n.cantPlay(name)
+        onProblem?()
+    }
+
+    private func loadMetadata() {
+        metadataTask?.cancel()
+        guard let id = currentItemID, let url = resolvedURLs[id] else { return }
+        metadataTask = Task { [weak self] in
+            let access = SecurityScopedAccess(url)
+            defer { withExtendedLifetime(access) {} }
+            let asset = AVURLAsset(url: url)
+            let duration = try? await asset.load(.duration)
+            var pixelSize: CGSize?
+            if let track = try? await asset.loadTracks(withMediaType: .video).first,
+               let geometry = try? await track.load(.naturalSize, .preferredTransform) {
+                let rect = CGRect(origin: .zero, size: geometry.0).applying(geometry.1)
+                pixelSize = CGSize(width: abs(rect.width), height: abs(rect.height))
+            }
+            guard !Task.isCancelled, let self, self.video?.id == id else { return }
+            self.video?.pixelSize = pixelSize
+            self.video?.duration = duration.map(CMTimeGetSeconds)
+        }
+    }
+
+    // MARK: - Rotation
+
+    private func scheduleRotation() {
+        rotationTimer?.invalidate()
+        rotationTimer = nil
+        guard rotationInterval != .never else { return }
+        let timer = Timer(timeInterval: TimeInterval(rotationInterval.rawValue), repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated {
+                // Nobody is watching a paused or hidden wallpaper; don't load new videos for it.
+                guard let self, self.status == .playing else { return }
+                self.showNext()
+            }
+        }
+        timer.tolerance = min(60, TimeInterval(rotationInterval.rawValue) / 10)
+        RunLoop.main.add(timer, forMode: .common)
+        rotationTimer = timer
+    }
+
+    // MARK: - Lock screen
+
+    private func updateLockScreen() {
+        guard syncLockScreen else { return }
+        let videos = assignment.compactMapValues { resolvedURLs[$0] }
+        if videos.isEmpty {
+            lockScreen.restore()
+        } else {
+            lockScreen.update(videos: videos)
+        }
+    }
+
+    // MARK: - Shortcuts
+
+    /// Returns false when another app already uses the shortcut; the previous one stays in place.
+    @discardableResult
+    func setShortcut(_ shortcut: KeyShortcut?, for action: HotKeyCenter.Action) -> Bool {
+        guard hotKeys.register(shortcut, for: action) else {
+            hotKeys.register(action == .togglePause ? pauseShortcut : nextShortcut, for: action)
+            return false
+        }
+        switch action {
+        case .togglePause:
+            pauseShortcut = shortcut
+            settings.pauseShortcut = shortcut
+        case .nextVideo:
+            nextShortcut = shortcut
+            settings.nextShortcut = shortcut
+        }
+        return true
+    }
+
+    /// Lets the shortcut recorder see keys that are currently registered as shortcuts.
+    func suspendShortcuts() {
+        hotKeys.unregisterAll()
+    }
+
+    func registerShortcuts() {
+        hotKeys.register(pauseShortcut, for: .togglePause)
+        hotKeys.register(nextShortcut, for: .nextVideo)
+    }
+
+    // MARK: - Launch at login
 
     func setLaunchAtLogin(_ enabled: Bool) {
         let service = SMAppService.mainApp
@@ -209,52 +491,5 @@ final class AppModel {
 
     func openLoginItemsSettings() {
         SMAppService.openSystemSettingsLoginItems()
-    }
-
-    func toggleMute() {
-        if isMuted && volume == 0 {
-            volume = 0.5
-        }
-        isMuted.toggle()
-    }
-
-    private func updatePlayback() {
-        guard video != nil else {
-            autoPauseReason = nil
-            return
-        }
-        let conditions = PlaybackConditions(
-            userPaused: isPaused,
-            screensAsleep: monitor.screensAsleep,
-            sessionActive: monitor.isSessionActive,
-            wallpaperVisible: wallpaper.isVisible,
-            onBattery: monitor.isOnBattery,
-            lowPowerMode: monitor.isLowPowerMode,
-            pauseWhenSavingPower: pauseWhenSavingPower
-        )
-        let reason = PlaybackPolicy.pauseReason(for: conditions)
-        autoPauseReason = reason == .user ? nil : reason
-        if reason == nil {
-            engine.play()
-        } else {
-            engine.pause()
-        }
-    }
-
-    private func loadMetadata(for url: URL) {
-        metadataTask?.cancel()
-        metadataTask = Task { [weak self] in
-            let asset = AVURLAsset(url: url)
-            let duration = try? await asset.load(.duration)
-            var pixelSize: CGSize?
-            if let track = try? await asset.loadTracks(withMediaType: .video).first,
-               let geometry = try? await track.load(.naturalSize, .preferredTransform) {
-                let rect = CGRect(origin: .zero, size: geometry.0).applying(geometry.1)
-                pixelSize = CGSize(width: abs(rect.width), height: abs(rect.height))
-            }
-            guard !Task.isCancelled, let self, self.video?.url == url else { return }
-            self.video?.pixelSize = pixelSize
-            self.video?.duration = duration.map(CMTimeGetSeconds)
-        }
     }
 }

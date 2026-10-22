@@ -1,33 +1,35 @@
 import AppKit
 import AVFoundation
 
+/// One desktop-level window per display, each showing whichever player it's given.
 @MainActor
 final class WallpaperController {
     var onVisibilityChange: (() -> Void)?
+    var onScreensChange: (() -> Void)?
 
-    private let player: AVPlayer
-    private var windows: [CGDirectDisplayID: WallpaperWindow] = [:]
-    private var isShown = false
-    private var lastVisible = false
+    private var windows: [String: WallpaperWindow] = [:]
+    private var players: [String: AVPlayer] = [:]
+    private var lastVisible: Set<String> = []
 
     var videoGravity: AVLayerVideoGravity = .resizeAspectFill {
         didSet { windows.values.forEach { $0.playerView.videoGravity = videoGravity } }
     }
 
-    /// True when any part of the wallpaper is visible on any display.
-    var isVisible: Bool {
-        isShown && windows.values.contains { $0.occlusionState.contains(.visible) }
+    /// Display keys whose wallpaper is at least partly visible.
+    var visibleDisplayKeys: Set<String> {
+        Set(windows.compactMap { key, window in
+            players[key] != nil && window.isVisible && window.occlusionState.contains(.visible) ? key : nil
+        })
     }
 
-    init(player: AVPlayer) {
-        self.player = player
+    init() {
         let center = NotificationCenter.default
         center.addObserver(
             forName: NSApplication.didChangeScreenParametersNotification,
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            MainActor.assumeIsolated { self?.syncWithScreens() }
+            MainActor.assumeIsolated { self?.onScreensChange?() }
         }
         center.addObserver(
             forName: NSWindow.didChangeOcclusionStateNotification,
@@ -38,51 +40,39 @@ final class WallpaperController {
         }
     }
 
-    func show() {
-        isShown = true
-        syncWithScreens()
-    }
-
-    func hide() {
-        isShown = false
-        windows.values.forEach { $0.orderOut(nil) }
-        visibilityMayHaveChanged()
-    }
-
-    private func syncWithScreens() {
-        guard isShown else { return }
-        var connected = Set<CGDirectDisplayID>()
+    /// `players` maps display keys to the player that display should show. Displays left out show nothing.
+    func setPlayers(_ players: [String: AVPlayer]) {
+        self.players = players
+        var connected = Set<String>()
         for screen in NSScreen.screens {
-            guard let id = screen.displayID else { continue }
-            connected.insert(id)
-            if let window = windows[id] {
-                // Resolution or arrangement changed.
-                if window.frame != screen.frame {
-                    window.setFrame(screen.frame, display: true)
-                }
-            } else {
-                let window = WallpaperWindow(screen: screen, player: player)
-                window.playerView.videoGravity = videoGravity
-                windows[id] = window
+            guard let key = screen.displayKey else { continue }
+            connected.insert(key)
+            guard let player = players[key] else {
+                windows[key]?.orderOut(nil)
+                continue
             }
-            windows[id]?.orderFront(nil)
+            let window = windows[key] ?? WallpaperWindow(screen: screen)
+            windows[key] = window
+            // Resolution or arrangement changed.
+            if window.frame != screen.frame {
+                window.setFrame(screen.frame, display: true)
+            }
+            window.playerView.videoGravity = videoGravity
+            if window.playerView.player !== player {
+                window.playerView.player = player
+            }
+            window.orderFront(nil)
         }
-        for id in windows.keys where !connected.contains(id) {
-            windows.removeValue(forKey: id)?.orderOut(nil)
+        for key in windows.keys where !connected.contains(key) {
+            windows.removeValue(forKey: key)?.orderOut(nil)
         }
         visibilityMayHaveChanged()
     }
 
     private func visibilityMayHaveChanged() {
-        let visible = isVisible
+        let visible = visibleDisplayKeys
         guard visible != lastVisible else { return }
         lastVisible = visible
         onVisibilityChange?()
-    }
-}
-
-private extension NSScreen {
-    var displayID: CGDirectDisplayID? {
-        (deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as? NSNumber)?.uint32Value
     }
 }

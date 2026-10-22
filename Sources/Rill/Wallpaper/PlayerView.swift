@@ -4,12 +4,17 @@ import AVFoundation
 final class PlayerView: NSView {
     private let playerLayer = AVPlayerLayer()
 
+    var player: AVPlayer? {
+        get { playerLayer.player }
+        set { playerLayer.player = newValue }
+    }
+
     var videoGravity: AVLayerVideoGravity {
         get { playerLayer.videoGravity }
         set { playerLayer.videoGravity = newValue }
     }
 
-    init(player: AVPlayer, cornerRadius: CGFloat = 0) {
+    init(player: AVPlayer?, cornerRadius: CGFloat = 0) {
         super.init(frame: .zero)
         playerLayer.player = player
         playerLayer.videoGravity = .resizeAspectFill

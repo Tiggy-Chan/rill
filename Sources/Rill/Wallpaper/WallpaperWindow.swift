@@ -1,11 +1,9 @@
 import AppKit
-import AVFoundation
 
 final class WallpaperWindow: NSWindow {
-    let playerView: PlayerView
+    let playerView = PlayerView(player: nil)
 
-    init(screen: NSScreen, player: AVPlayer) {
-        playerView = PlayerView(player: player)
+    init(screen: NSScreen) {
         super.init(contentRect: screen.frame, styleMask: .borderless, backing: .buffered, defer: false)
         // Just above the system wallpaper, below Finder's desktop icons (desktopWindow + 20).
         level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.desktopWindow)) + 1)

@@ -97,16 +97,8 @@ final class StatusItemController: NSObject, NSPopoverDelegate, NSWindowDelegate,
 
     private func chooseVideo() {
         closePanel()
-        let panel = NSOpenPanel()
-        panel.allowedContentTypes = [.movie]
-        panel.allowsMultipleSelection = false
-        panel.canChooseDirectories = false
-        panel.message = L10n.openPanelMessage
-        panel.prompt = L10n.setAsWallpaper
-        panel.directoryURL = model.video?.url.deletingLastPathComponent()
-        NSApp.activate()
-        if panel.runModal() == .OK, let url = panel.url {
-            model.setVideo(url)
+        if let urls = VideoPicker.run() {
+            model.addVideos(urls)
         }
     }
 
@@ -148,7 +140,7 @@ final class StatusItemController: NSObject, NSPopoverDelegate, NSWindowDelegate,
     // MARK: - Drop a video onto the menu bar icon
 
     func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-        guard videoURL(from: sender) != nil else { return [] }
+        guard !videoURLs(from: sender).isEmpty else { return [] }
         statusItem.button?.highlight(true)
         return .copy
     }
@@ -159,17 +151,17 @@ final class StatusItemController: NSObject, NSPopoverDelegate, NSWindowDelegate,
 
     func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         statusItem.button?.highlight(false)
-        guard let url = videoURL(from: sender) else { return false }
-        model.setVideo(url)
+        let urls = videoURLs(from: sender)
+        guard !urls.isEmpty else { return false }
+        model.addVideos(urls)
         return true
     }
 
-    private func videoURL(from info: NSDraggingInfo) -> URL? {
+    private func videoURLs(from info: NSDraggingInfo) -> [URL] {
         let options: [NSPasteboard.ReadingOptionKey: Any] = [
             .urlReadingFileURLsOnly: true,
             .urlReadingContentsConformToTypes: [UTType.movie.identifier],
         ]
-        let urls = info.draggingPasteboard.readObjects(forClasses: [NSURL.self], options: options) as? [URL]
-        return urls?.first
+        return info.draggingPasteboard.readObjects(forClasses: [NSURL.self], options: options) as? [URL] ?? []
     }
 }

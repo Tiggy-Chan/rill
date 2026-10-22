@@ -32,9 +32,9 @@
 "Choose a Video" = "选择一段视频";
 "or drop one on the menu bar icon" = "或把视频拖到菜单栏图标上";
 "Remove" = "移除";
-"Turn off the video wallpaper and show the system wallpaper" = "停用视频壁纸，恢复系统壁纸";
+"Remove this video from your library" = "从视频库中移除这个视频";
 "Quit" = "退出";
-"Choose a video for your desktop wallpaper" = "选择一段视频作为桌面壁纸";
+"Choose videos for your desktop wallpaper" = "选择用作桌面壁纸的视频";
 "Set as Wallpaper" = "设为壁纸";
 
 /* Settings */
@@ -44,6 +44,34 @@
 "Relaunch Rill to use the new language." = "重新启动 Rill 后即可使用新语言。";
 "Relaunch" = "重新启动";
 "System Default (%@)" = "跟随系统（%@）";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "从不";
+"Space" = "空格";
+"Next Video" = "下一个视频";
+"Show the video on the lock screen" = "在锁屏上显示视频画面";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "把视频的一帧设为系统壁纸，锁屏会显示它。关闭后会恢复你原来的壁纸。";
+"Couldn't restore your original wallpaper." = "无法恢复你原来的壁纸。";
+"Keyboard Shortcuts" = "键盘快捷键";
+"Pause or Resume" = "暂停或继续";
+"None" = "无";
+"Clear Shortcut" = "清除快捷键";
+"Already in Use" = "已被占用";
+"Type Shortcut…" = "请按下快捷键…";
+"Record Shortcut" = "录制快捷键";
+"Library" = "视频库";
+"Add videos to rotate between them or show a different one on each display." = "添加多个视频后，可以定时轮换，或在每块显示器上显示不同的视频。";
+"Videos" = "视频";
+"Add Videos…" = "添加视频…";
+"Change video" = "自动更换视频";
+"Shuffle" = "随机顺序";
+"Videos don't change while the wallpaper is paused or hidden." = "壁纸暂停或被遮挡时，不会更换视频。";
+"Same as Main Video" = "与主视频相同";
+"Displays" = "显示器";
+"Only the main video plays sound." = "只有主视频会播放声音。";
+"Show" = "显示";
+"Remove from Library" = "从视频库中移除";
+"Couldn't update the lock screen wallpaper: %@" = "无法更新锁屏壁纸：%@";
 
 /* Problems */
 "Can't find “%@”, the video you used last time. It may have been moved or deleted." = "找不到上次使用的视频「%@」，它可能被移动或删除了。";

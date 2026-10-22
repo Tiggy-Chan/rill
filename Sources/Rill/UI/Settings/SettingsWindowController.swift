@@ -7,6 +7,7 @@ final class SettingsWindowController: NSWindowController {
         let tabs = NSTabViewController()
         tabs.tabStyle = .toolbar
         tabs.addTabViewItem(Self.tab(L10n.general, symbol: "gearshape", content: GeneralSettingsView(model: model)))
+        tabs.addTabViewItem(Self.tab(L10n.library, symbol: "film.stack", content: LibrarySettingsView(model: model)))
 
         let window = NSWindow(contentViewController: tabs)
         window.styleMask = [.titled, .closable]
@@ -20,8 +21,11 @@ final class SettingsWindowController: NSWindowController {
         fatalError("init(coder:) is not supported")
     }
 
-    func show() {
+    func show(tab: Int? = nil) {
         guard let window else { return }
+        if let tab, let tabs = contentViewController as? NSTabViewController, tabs.tabViewItems.indices.contains(tab) {
+            tabs.selectedTabViewItemIndex = tab
+        }
         NSApp.activate()
         if !window.isVisible {
             window.center()

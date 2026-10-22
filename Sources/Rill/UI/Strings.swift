@@ -45,6 +45,17 @@ enum L10n {
     static var openPanelMessage: String { String(localized: "Choose a video for your desktop wallpaper") }
     static var setAsWallpaper: String { String(localized: "Set as Wallpaper") }
 
+    // Settings
+    static var settings: String { String(localized: "Settings…") }
+    static var general: String { String(localized: "General") }
+    static var language: String { String(localized: "Language") }
+    static var relaunchToApply: String { String(localized: "Relaunch Rill to use the new language.") }
+    static var relaunchNow: String { String(localized: "Relaunch") }
+
+    static func systemLanguage(_ name: String) -> String {
+        String(localized: "System Default (\(name))")
+    }
+
     // Problems
     static func cantFindLastVideo(_ name: String) -> String {
         String(localized: "Can't find “\(name)”, the video you used last time. It may have been moved or deleted.")

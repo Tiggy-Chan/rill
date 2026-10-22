@@ -37,6 +37,14 @@
 "Choose a video for your desktop wallpaper" = "选择一段视频作为桌面壁纸";
 "Set as Wallpaper" = "设为壁纸";
 
+/* Settings */
+"Settings…" = "设置…";
+"General" = "通用";
+"Language" = "语言";
+"Relaunch Rill to use the new language." = "重新启动 Rill 后即可使用新语言。";
+"Relaunch" = "重新启动";
+"System Default (%@)" = "跟随系统（%@）";
+
 /* Problems */
 "Can't find “%@”, the video you used last time. It may have been moved or deleted." = "找不到上次使用的视频「%@」，它可能被移动或删除了。";
 "Can't play “%@”. The file may be damaged or in an unsupported format." = "无法播放「%@」，文件可能已损坏或格式不受支持。";

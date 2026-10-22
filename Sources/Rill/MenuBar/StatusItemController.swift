@@ -5,13 +5,15 @@ import UniformTypeIdentifiers
 @MainActor
 final class StatusItemController: NSObject, NSPopoverDelegate, NSWindowDelegate, NSDraggingDestination {
     private let model: AppModel
+    private let openSettings: () -> Void
     private let statusItem: NSStatusItem
     private let popover = NSPopover()
     private var localMonitor: Any?
     private var globalMonitor: Any?
 
-    init(model: AppModel) {
+    init(model: AppModel, openSettings: @escaping () -> Void) {
         self.model = model
+        self.openSettings = openSettings
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         super.init()
         configureButton()
@@ -68,6 +70,10 @@ final class StatusItemController: NSObject, NSPopoverDelegate, NSWindowDelegate,
         let panel = PanelView(
             model: model,
             chooseVideo: { [weak self] in self?.chooseVideo() },
+            openSettings: { [weak self] in
+                self?.closePanel()
+                self?.openSettings()
+            },
             quit: { NSApp.terminate(nil) }
         )
         let host = NSHostingController(rootView: panel)

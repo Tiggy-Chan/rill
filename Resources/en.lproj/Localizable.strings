@@ -37,6 +37,14 @@
 "Choose a video for your desktop wallpaper" = "Choose a video for your desktop wallpaper";
 "Set as Wallpaper" = "Set as Wallpaper";
 
+/* Settings */
+"Settings…" = "Settings…";
+"General" = "General";
+"Language" = "Language";
+"Relaunch Rill to use the new language." = "Relaunch Rill to use the new language.";
+"Relaunch" = "Relaunch";
+"System Default (%@)" = "System Default (%@)";
+
 /* Problems */
 "Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Can't find “%@”, the video you used last time. It may have been moved or deleted.";
 "Can't play “%@”. The file may be damaged or in an unsupported format." = "Can't play “%@”. The file may be damaged or in an unsupported format.";

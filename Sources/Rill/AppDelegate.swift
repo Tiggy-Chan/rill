@@ -4,15 +4,21 @@ import AppKit
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private let model = AppModel()
     private var statusItemController: StatusItemController?
+    private lazy var settingsWindow = SettingsWindowController(model: model)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // A video passed at launch (Finder "Open With", `open -a`) arrives before this and wins.
         if model.video == nil {
             model.restoreLastVideo()
         }
-        let controller = StatusItemController(model: model)
+        let controller = StatusItemController(model: model, openSettings: { [weak self] in self?.settingsWindow.show() })
         statusItemController = controller
         model.onProblem = { [weak controller] in controller?.showPanel() }
+        #if DEBUG
+        if CommandLine.arguments.contains("-RillOpenSettings") {
+            Task { settingsWindow.show() }
+        }
+        #endif
         if model.video == nil {
             // Let the status item settle in the menu bar before anchoring the panel to it.
             Task { controller.showPanel() }

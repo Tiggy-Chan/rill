@@ -5,6 +5,7 @@ import SwiftUI
 struct PanelView: View {
     @Bindable var model: AppModel
     let chooseVideo: () -> Void
+    let openSettings: () -> Void
     let quit: () -> Void
 
     var body: some View {
@@ -18,9 +19,7 @@ struct PanelView: View {
                 details(for: video)
                 playbackControls
                 fillModeRow
-                powerRow
             }
-            launchAtLoginRow
             Divider()
             footer
         }
@@ -58,19 +57,6 @@ struct PanelView: View {
                     .padding(.top, 4)
             }
         }
-    }
-
-    private var powerRow: some View {
-        HStack {
-            Text(L10n.pauseOnBattery)
-                .foregroundStyle(.secondary)
-            Spacer()
-            Toggle(L10n.pauseOnBattery, isOn: $model.pauseWhenSavingPower)
-                .toggleStyle(.switch)
-                .controlSize(.mini)
-                .labelsHidden()
-        }
-        .font(.callout)
     }
 
     private var playbackControls: some View {
@@ -128,29 +114,6 @@ struct PanelView: View {
         .font(.callout)
     }
 
-    private var launchAtLoginRow: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Text(L10n.launchAtLogin)
-                    .foregroundStyle(.secondary)
-                Spacer()
-                Toggle(L10n.launchAtLogin, isOn: Binding(
-                    get: { model.launchAtLogin == .enabled || model.launchAtLogin == .requiresApproval },
-                    set: { model.setLaunchAtLogin($0) }
-                ))
-                .toggleStyle(.switch)
-                .controlSize(.mini)
-                .labelsHidden()
-            }
-            if model.launchAtLogin == .requiresApproval {
-                Button(L10n.allowInSystemSettings, action: model.openLoginItemsSettings)
-                    .buttonStyle(.link)
-                    .font(.caption)
-            }
-        }
-        .font(.callout)
-    }
-
     private var footer: some View {
         HStack(spacing: 14) {
             Button(model.video == nil ? L10n.chooseVideo : L10n.changeVideo, action: chooseVideo)
@@ -159,6 +122,12 @@ struct PanelView: View {
                     .help(L10n.removeHelp)
             }
             Spacer()
+            Button(action: openSettings) {
+                Image(systemName: "gearshape")
+            }
+            .help(L10n.settings)
+            .accessibilityLabel(L10n.settings)
+            .keyboardShortcut(",")
             Button(L10n.quit, action: quit)
                 .keyboardShortcut("q")
         }

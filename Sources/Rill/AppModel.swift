@@ -115,6 +115,7 @@ final class AppModel {
     private let wallpaper: WallpaperController
     private let monitor: SystemMonitor
     @ObservationIgnored private var metadataTask: Task<Void, Never>?
+    @ObservationIgnored private var videoAccess: SecurityScopedAccess?
 
     init(settings: SettingsStore = SettingsStore()) {
         self.settings = settings
@@ -158,6 +159,7 @@ final class AppModel {
     }
 
     func setVideo(_ url: URL) {
+        videoAccess = SecurityScopedAccess(url)
         engine.load(url)
         video = VideoInfo(url: url)
         isPaused = false
@@ -171,6 +173,7 @@ final class AppModel {
     func clearVideo() {
         metadataTask?.cancel()
         engine.unload()
+        videoAccess = nil
         wallpaper.hide()
         video = nil
         isPaused = false

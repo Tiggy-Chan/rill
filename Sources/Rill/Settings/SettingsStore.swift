@@ -15,7 +15,7 @@ struct SettingsStore {
 
     private enum Key {
         static let videoBookmark = "videoBookmark"
-        static let videoPath = "videoPath"
+        static let videoName = "videoName"
         static let volume = "volume"
         static let isMuted = "isMuted"
         static let fillMode = "fillMode"
@@ -42,40 +42,44 @@ struct SettingsStore {
         nonmutating set { defaults.set(newValue.rawValue, forKey: Key.fillMode) }
     }
 
+    /// Stores a security-scoped bookmark, the only way a sandboxed app can reopen the file after relaunch.
     func saveVideo(_ url: URL?) {
         guard let url else {
             defaults.removeObject(forKey: Key.videoBookmark)
-            defaults.removeObject(forKey: Key.videoPath)
+            defaults.removeObject(forKey: Key.videoName)
             return
         }
-        defaults.set(url.path, forKey: Key.videoPath)
-        // A bookmark keeps following the file if the user renames or moves it.
-        let bookmark = try? url.bookmarkData(options: [], includingResourceValuesForKeys: nil, relativeTo: nil)
+        defaults.set(url.lastPathComponent, forKey: Key.videoName)
+        let bookmark = try? url.bookmarkData(
+            options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess],
+            includingResourceValuesForKeys: nil,
+            relativeTo: nil
+        )
         defaults.set(bookmark, forKey: Key.videoBookmark)
     }
 
     func loadVideo() -> StoredVideo {
-        if let data = defaults.data(forKey: Key.videoBookmark) {
-            var isStale = false
-            if let url = try? URL(
-                resolvingBookmarkData: data,
-                options: [.withoutUI, .withoutMounting],
-                relativeTo: nil,
-                bookmarkDataIsStale: &isStale
-            ), isUsable(url) {
-                if isStale || url.path != defaults.string(forKey: Key.videoPath) {
-                    saveVideo(url)
-                }
-                return .available(url)
-            }
+        let name = defaults.string(forKey: Key.videoName)
+        guard let data = defaults.data(forKey: Key.videoBookmark) else {
+            return name.map { .missing(name: $0) } ?? .none
         }
-        guard let path = defaults.string(forKey: Key.videoPath) else { return .none }
-        let url = URL(fileURLWithPath: path)
-        return isUsable(url) ? .available(url) : .missing(name: url.lastPathComponent)
-    }
-
-    private func isUsable(_ url: URL) -> Bool {
+        var isStale = false
+        guard let url = try? URL(
+            resolvingBookmarkData: data,
+            options: [.withSecurityScope, .withoutUI, .withoutMounting],
+            relativeTo: nil,
+            bookmarkDataIsStale: &isStale
+        ) else {
+            return .missing(name: name ?? "")
+        }
+        let access = SecurityScopedAccess(url)
         // Bookmarks follow files into the Trash; treat that as gone.
-        !url.pathComponents.contains(".Trash") && FileManager.default.fileExists(atPath: url.path)
+        guard !url.pathComponents.contains(".Trash"), FileManager.default.fileExists(atPath: url.path) else {
+            return .missing(name: name ?? url.lastPathComponent)
+        }
+        if isStale || url.lastPathComponent != name {
+            saveVideo(access.url)
+        }
+        return .available(url)
     }
 }

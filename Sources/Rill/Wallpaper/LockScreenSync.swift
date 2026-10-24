@@ -80,9 +80,7 @@ final class LockScreenSync {
     private nonisolated static func exportFrame(of video: URL) async -> URL? {
         let access = SecurityScopedAccess(video)
         defer { withExtendedLifetime(access) {} }
-        let generator = AVAssetImageGenerator(asset: AVURLAsset(url: video))
-        generator.appliesPreferredTrackTransform = true
-        guard let image = try? await generator.image(at: .zero).image else { return nil }
+        guard let image = await FramePicker.bestFrame(of: AVURLAsset(url: video)) else { return nil }
 
         try? FileManager.default.createDirectory(at: framesDirectory, withIntermediateDirectories: true)
         // A new name each time: macOS caches wallpapers by path and ignores changes to the same file.

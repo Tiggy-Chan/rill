@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "Non défini";
+"Playing" = "Lecture";
+"Paused" = "En pause";
+"Auto-Paused" = "Pause auto";
+"Paused while the displays are asleep" = "En pause pendant la suspension des écrans";
+"Paused while the screen is locked" = "En pause pendant le verrouillage de l’écran";
+"Paused while windows cover the wallpaper" = "En pause tant que des fenêtres masquent le fond d’écran";
+"Paused while on battery power" = "En pause sur batterie";
+"Paused while Low Power Mode is on" = "En pause tant que le mode Économie d’énergie est activé";
+
+/* Playback controls */
+"Pause" = "Pause";
+"Resume" = "Reprendre";
+"Mute" = "Couper le son";
+"Unmute" = "Activer le son";
+"Volume" = "Volume";
+"Scaling" = "Mise à l’échelle";
+"Fill" = "Remplir";
+"Fit" = "Ajuster";
+"Stretch" = "Étirer";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "Mettre en pause sur batterie ou en mode Économie d’énergie";
+"Launch at login" = "Ouvrir à la connexion";
+"Allow Rill in System Settings…" = "Autoriser Rill dans Réglages Système…";
+
+/* Video */
+"Choose Video…" = "Choisir une vidéo…";
+"Change Video…" = "Changer de vidéo…";
+"Change Video" = "Changer de vidéo";
+"Choose a Video" = "Choisir une vidéo";
+"or drop one on the menu bar icon" = "ou déposez-en une sur l’icône de la barre des menus";
+"Remove" = "Supprimer";
+"Remove this video from your library" = "Supprimer cette vidéo de votre bibliothèque";
+"Quit" = "Quitter";
+"Choose videos for your desktop wallpaper" = "Choisissez des vidéos pour le fond d’écran de votre bureau";
+"Set as Wallpaper" = "Définir comme fond d’écran";
+
+/* Settings */
+"Settings…" = "Réglages…";
+"General" = "Général";
+"Language" = "Langue";
+"Relaunch Rill to use the new language." = "Relancez Rill pour utiliser la nouvelle langue.";
+"Relaunch" = "Relancer";
+"System Default (%@)" = "Langue du système (%@)";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "Jamais";
+"Space" = "Espace";
+"Next Video" = "Vidéo suivante";
+"Show the video on the lock screen" = "Afficher la vidéo sur l’écran verrouillé";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Définit une image fixe de la vidéo comme fond d’écran macOS, également affiché sur l’écran verrouillé. Votre fond d’écran revient lorsque vous désactivez cette option.";
+"Couldn't restore your original wallpaper." = "Impossible de restaurer votre fond d’écran d’origine.";
+"Keyboard Shortcuts" = "Raccourcis clavier";
+"Pause or Resume" = "Pause ou reprise";
+"None" = "Aucun";
+"Clear Shortcut" = "Effacer le raccourci";
+"Already in Use" = "Déjà utilisé";
+"Type Shortcut…" = "Saisissez un raccourci…";
+"Record Shortcut" = "Enregistrer un raccourci";
+"Library" = "Bibliothèque";
+"Add videos to rotate between them or show a different one on each display." = "Ajoutez des vidéos pour les faire alterner ou en afficher une différente sur chaque écran.";
+"Videos" = "Vidéos";
+"Add Videos…" = "Ajouter des vidéos…";
+"Change video" = "Changer de vidéo";
+"Shuffle" = "Aléatoire";
+"Videos don't change while the wallpaper is paused or hidden." = "Les vidéos ne changent pas tant que le fond d’écran est en pause ou masqué.";
+"Same as Main Video" = "Comme la vidéo principale";
+"Displays" = "Écrans";
+"Only the main video plays sound." = "Seule la vidéo principale émet du son.";
+"Show" = "Afficher";
+"Remove from Library" = "Supprimer de la bibliothèque";
+"Couldn't update the lock screen wallpaper: %@" = "Impossible de mettre à jour le fond de l’écran verrouillé : %@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Impossible de trouver « %@ », la vidéo utilisée la dernière fois. Elle a peut-être été déplacée ou supprimée.";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "Impossible de lire « %@ ». Le fichier est peut-être endommagé ou dans un format non pris en charge.";
+"Couldn't change Launch at Login: %@" = "Impossible de modifier « Ouvrir à la connexion » : %@";

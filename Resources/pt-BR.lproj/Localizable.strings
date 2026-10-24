@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "Não definido";
+"Playing" = "Reproduzindo";
+"Paused" = "Pausado";
+"Auto-Paused" = "Pausa automática";
+"Paused while the displays are asleep" = "Pausado enquanto as telas estão em repouso";
+"Paused while the screen is locked" = "Pausado enquanto a tela está bloqueada";
+"Paused while windows cover the wallpaper" = "Pausado enquanto janelas cobrem o papel de parede";
+"Paused while on battery power" = "Pausado enquanto usa a bateria";
+"Paused while Low Power Mode is on" = "Pausado enquanto o Modo de Pouca Energia está ativado";
+
+/* Playback controls */
+"Pause" = "Pausar";
+"Resume" = "Retomar";
+"Mute" = "Silenciar";
+"Unmute" = "Ativar Som";
+"Volume" = "Volume";
+"Scaling" = "Escala";
+"Fill" = "Preencher";
+"Fit" = "Ajustar";
+"Stretch" = "Esticar";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "Pausar na bateria ou no Modo de Pouca Energia";
+"Launch at login" = "Abrir ao iniciar sessão";
+"Allow Rill in System Settings…" = "Permitir o Rill nos Ajustes do Sistema…";
+
+/* Video */
+"Choose Video…" = "Escolher Vídeo…";
+"Change Video…" = "Trocar Vídeo…";
+"Change Video" = "Trocar Vídeo";
+"Choose a Video" = "Escolha um Vídeo";
+"or drop one on the menu bar icon" = "ou solte um no ícone da barra de menus";
+"Remove" = "Remover";
+"Remove this video from your library" = "Remover este vídeo da biblioteca";
+"Quit" = "Encerrar";
+"Choose videos for your desktop wallpaper" = "Escolha vídeos para o papel de parede da mesa";
+"Set as Wallpaper" = "Definir como Papel de Parede";
+
+/* Settings */
+"Settings…" = "Ajustes…";
+"General" = "Geral";
+"Language" = "Idioma";
+"Relaunch Rill to use the new language." = "Reabra o Rill para usar o novo idioma.";
+"Relaunch" = "Reabrir";
+"System Default (%@)" = "Padrão do Sistema (%@)";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "Nunca";
+"Space" = "Espaço";
+"Next Video" = "Próximo Vídeo";
+"Show the video on the lock screen" = "Mostrar o vídeo na tela bloqueada";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Define um quadro do vídeo como papel de parede do macOS, que aparece na tela bloqueada. Seu papel de parede volta quando você desativa esta opção.";
+"Couldn't restore your original wallpaper." = "Não foi possível restaurar o papel de parede original.";
+"Keyboard Shortcuts" = "Atalhos de Teclado";
+"Pause or Resume" = "Pausar ou Retomar";
+"None" = "Nenhum";
+"Clear Shortcut" = "Limpar Atalho";
+"Already in Use" = "Já em Uso";
+"Type Shortcut…" = "Digite o Atalho…";
+"Record Shortcut" = "Gravar Atalho";
+"Library" = "Biblioteca";
+"Add videos to rotate between them or show a different one on each display." = "Adicione vídeos para alterná-los ou mostrar um diferente em cada tela.";
+"Videos" = "Vídeos";
+"Add Videos…" = "Adicionar Vídeos…";
+"Change video" = "Trocar vídeo";
+"Shuffle" = "Aleatório";
+"Videos don't change while the wallpaper is paused or hidden." = "Os vídeos não mudam enquanto o papel de parede está pausado ou oculto.";
+"Same as Main Video" = "Igual ao Vídeo Principal";
+"Displays" = "Telas";
+"Only the main video plays sound." = "Somente o vídeo principal reproduz som.";
+"Show" = "Mostrar";
+"Remove from Library" = "Remover da Biblioteca";
+"Couldn't update the lock screen wallpaper: %@" = "Não foi possível atualizar o papel de parede da tela bloqueada: %@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Não é possível encontrar “%@”, o vídeo usado da última vez. Talvez ele tenha sido movido ou apagado.";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "Não é possível reproduzir “%@”. O arquivo pode estar danificado ou em um formato incompatível.";
+"Couldn't change Launch at Login: %@" = "Não foi possível alterar Abrir ao Iniciar Sessão: %@";

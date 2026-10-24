@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "Не задано";
+"Playing" = "Играет";
+"Paused" = "Пауза";
+"Auto-Paused" = "Автопауза";
+"Paused while the displays are asleep" = "Пауза: дисплеи в режиме сна";
+"Paused while the screen is locked" = "Пауза: экран заблокирован";
+"Paused while windows cover the wallpaper" = "Пауза: обои закрыты окнами";
+"Paused while on battery power" = "Пауза: питание от аккумулятора";
+"Paused while Low Power Mode is on" = "Пауза: включен режим энергосбережения";
+
+/* Playback controls */
+"Pause" = "Пауза";
+"Resume" = "Продолжить";
+"Mute" = "Выключить звук";
+"Unmute" = "Включить звук";
+"Volume" = "Громкость";
+"Scaling" = "Масштаб";
+"Fill" = "Заполнить";
+"Fit" = "Вписать";
+"Stretch" = "Растянуть";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "Пауза от аккумулятора и в режиме энергосбережения";
+"Launch at login" = "Запускать при входе";
+"Allow Rill in System Settings…" = "Разрешить Rill в Системных настройках…";
+
+/* Video */
+"Choose Video…" = "Выбрать видео…";
+"Change Video…" = "Сменить видео…";
+"Change Video" = "Сменить видео";
+"Choose a Video" = "Выберите видео";
+"or drop one on the menu bar icon" = "или перетяните его на значок в строке меню";
+"Remove" = "Удалить";
+"Remove this video from your library" = "Удалить это видео из медиатеки";
+"Quit" = "Завершить";
+"Choose videos for your desktop wallpaper" = "Выберите видео для обоев рабочего стола";
+"Set as Wallpaper" = "Сделать обоями";
+
+/* Settings */
+"Settings…" = "Настройки…";
+"General" = "Основные";
+"Language" = "Язык";
+"Relaunch Rill to use the new language." = "Перезапустите Rill, чтобы применить новый язык.";
+"Relaunch" = "Перезапустить";
+"System Default (%@)" = "Как в системе (%@)";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "Никогда";
+"Space" = "Пробел";
+"Next Video" = "Следующее видео";
+"Show the video on the lock screen" = "Показывать видео на экране блокировки";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Кадр из видео становится обоями macOS, которые показывает экран блокировки. Если выключить, вернутся ваши прежние обои.";
+"Couldn't restore your original wallpaper." = "Не удалось вернуть прежние обои.";
+"Keyboard Shortcuts" = "Сочетания клавиш";
+"Pause or Resume" = "Пауза или продолжение";
+"None" = "Нет";
+"Clear Shortcut" = "Очистить сочетание";
+"Already in Use" = "Уже занято";
+"Type Shortcut…" = "Нажмите сочетание…";
+"Record Shortcut" = "Записать сочетание";
+"Library" = "Медиатека";
+"Add videos to rotate between them or show a different one on each display." = "Добавьте несколько видео, чтобы они сменяли друг друга или на каждом дисплее было свое.";
+"Videos" = "Видео";
+"Add Videos…" = "Добавить видео…";
+"Change video" = "Менять видео";
+"Shuffle" = "Вперемешку";
+"Videos don't change while the wallpaper is paused or hidden." = "Видео не меняются, пока обои на паузе или скрыты.";
+"Same as Main Video" = "Как основное видео";
+"Displays" = "Дисплеи";
+"Only the main video plays sound." = "Звук воспроизводит только основное видео.";
+"Show" = "Показать";
+"Remove from Library" = "Удалить из медиатеки";
+"Couldn't update the lock screen wallpaper: %@" = "Не удалось обновить обои экрана блокировки: %@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Не удается найти «%@» — видео, которое вы использовали в прошлый раз. Возможно, оно перемещено или удалено.";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "Не удается воспроизвести «%@». Возможно, файл поврежден или имеет неподдерживаемый формат.";
+"Couldn't change Launch at Login: %@" = "Не удалось изменить запуск при входе: %@";

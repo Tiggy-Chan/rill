@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "Niet ingesteld";
+"Playing" = "Speelt af";
+"Paused" = "Gepauzeerd";
+"Auto-Paused" = "Auto-pauze";
+"Paused while the displays are asleep" = "Gepauzeerd terwijl de beeldschermen in de sluimerstand staan";
+"Paused while the screen is locked" = "Gepauzeerd terwijl het scherm vergrendeld is";
+"Paused while windows cover the wallpaper" = "Gepauzeerd terwijl vensters de achtergrond bedekken";
+"Paused while on battery power" = "Gepauzeerd tijdens gebruik van de batterij";
+"Paused while Low Power Mode is on" = "Gepauzeerd terwijl de energiebesparingsmodus aan staat";
+
+/* Playback controls */
+"Pause" = "Pauzeer";
+"Resume" = "Hervat";
+"Mute" = "Geluid uit";
+"Unmute" = "Geluid aan";
+"Volume" = "Volume";
+"Scaling" = "Schaal";
+"Fill" = "Vullen";
+"Fit" = "Passend";
+"Stretch" = "Rekken";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "Pauzeer op batterij of in energiebesparingsmodus";
+"Launch at login" = "Open bij inloggen";
+"Allow Rill in System Settings…" = "Sta Rill toe in Systeeminstellingen…";
+
+/* Video */
+"Choose Video…" = "Kies video…";
+"Change Video…" = "Wijzig video…";
+"Change Video" = "Wijzig video";
+"Choose a Video" = "Kies een video";
+"or drop one on the menu bar icon" = "of sleep er een naar het menubalksymbool";
+"Remove" = "Verwijder";
+"Remove this video from your library" = "Verwijder deze video uit je bibliotheek";
+"Quit" = "Stop";
+"Choose videos for your desktop wallpaper" = "Kies video's voor je bureaubladachtergrond";
+"Set as Wallpaper" = "Stel in als achtergrond";
+
+/* Settings */
+"Settings…" = "Instellingen…";
+"General" = "Algemeen";
+"Language" = "Taal";
+"Relaunch Rill to use the new language." = "Start Rill opnieuw om de nieuwe taal te gebruiken.";
+"Relaunch" = "Start opnieuw";
+"System Default (%@)" = "Systeemstandaard (%@)";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "Nooit";
+"Space" = "Spatie";
+"Next Video" = "Volgende video";
+"Show the video on the lock screen" = "Toon de video op het toegangsscherm";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Stelt een beeld uit de video in als je macOS-achtergrond, die het toegangsscherm toont. Je eigen achtergrond komt terug als je dit uitschakelt.";
+"Couldn't restore your original wallpaper." = "Kan je oorspronkelijke achtergrond niet herstellen.";
+"Keyboard Shortcuts" = "Toetscombinaties";
+"Pause or Resume" = "Pauzeer of hervat";
+"None" = "Geen";
+"Clear Shortcut" = "Wis toetscombinatie";
+"Already in Use" = "Al in gebruik";
+"Type Shortcut…" = "Typ toetscombinatie…";
+"Record Shortcut" = "Neem toetscombinatie op";
+"Library" = "Bibliotheek";
+"Add videos to rotate between them or show a different one on each display." = "Voeg video's toe om ze af te wisselen of op elk beeldscherm een andere te tonen.";
+"Videos" = "Video's";
+"Add Videos…" = "Voeg video's toe…";
+"Change video" = "Wijzig video";
+"Shuffle" = "Willekeurig";
+"Videos don't change while the wallpaper is paused or hidden." = "Video's wisselen niet terwijl de achtergrond gepauzeerd of verborgen is.";
+"Same as Main Video" = "Zelfde als hoofdvideo";
+"Displays" = "Beeldschermen";
+"Only the main video plays sound." = "Alleen de hoofdvideo speelt geluid af.";
+"Show" = "Toon";
+"Remove from Library" = "Verwijder uit bibliotheek";
+"Couldn't update the lock screen wallpaper: %@" = "Kan de achtergrond van het toegangsscherm niet bijwerken: %@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Kan ‘%@’, de video die je de vorige keer gebruikte, niet vinden. Misschien is deze verplaatst of verwijderd.";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "Kan ‘%@’ niet afspelen. Het bestand is mogelijk beschadigd of heeft een niet-ondersteunde indeling.";
+"Couldn't change Launch at Login: %@" = "Kan ‘Open bij inloggen’ niet wijzigen: %@";

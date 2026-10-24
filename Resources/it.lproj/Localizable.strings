@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "Non impostato";
+"Playing" = "In riproduzione";
+"Paused" = "In pausa";
+"Auto-Paused" = "Pausa auto";
+"Paused while the displays are asleep" = "In pausa mentre i monitor sono in stop";
+"Paused while the screen is locked" = "In pausa mentre lo schermo è bloccato";
+"Paused while windows cover the wallpaper" = "In pausa mentre le finestre coprono lo sfondo";
+"Paused while on battery power" = "In pausa con alimentazione a batteria";
+"Paused while Low Power Mode is on" = "In pausa con la modalità Risparmio energetico attiva";
+
+/* Playback controls */
+"Pause" = "Pausa";
+"Resume" = "Riprendi";
+"Mute" = "Disattiva audio";
+"Unmute" = "Attiva audio";
+"Volume" = "Volume";
+"Scaling" = "Ridimensionamento";
+"Fill" = "Riempi";
+"Fit" = "Adatta";
+"Stretch" = "Allunga";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "Metti in pausa a batteria o in modalità Risparmio energetico";
+"Launch at login" = "Apri al login";
+"Allow Rill in System Settings…" = "Consenti Rill in Impostazioni di Sistema…";
+
+/* Video */
+"Choose Video…" = "Scegli video…";
+"Change Video…" = "Cambia video…";
+"Change Video" = "Cambia video";
+"Choose a Video" = "Scegli un video";
+"or drop one on the menu bar icon" = "o trascinane uno sull’icona nella barra dei menu";
+"Remove" = "Rimuovi";
+"Remove this video from your library" = "Rimuovi questo video dalla libreria";
+"Quit" = "Esci";
+"Choose videos for your desktop wallpaper" = "Scegli i video per lo sfondo della scrivania";
+"Set as Wallpaper" = "Imposta come sfondo";
+
+/* Settings */
+"Settings…" = "Impostazioni…";
+"General" = "Generali";
+"Language" = "Lingua";
+"Relaunch Rill to use the new language." = "Riapri Rill per usare la nuova lingua.";
+"Relaunch" = "Riapri";
+"System Default (%@)" = "Predefinita di sistema (%@)";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "Mai";
+"Space" = "Spazio";
+"Next Video" = "Video successivo";
+"Show the video on the lock screen" = "Mostra il video nella schermata di blocco";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Imposta un fotogramma del video come sfondo di macOS, che appare anche nella schermata di blocco. Il tuo sfondo torna quando disattivi questa opzione.";
+"Couldn't restore your original wallpaper." = "Impossibile ripristinare lo sfondo originale.";
+"Keyboard Shortcuts" = "Abbreviazioni da tastiera";
+"Pause or Resume" = "Pausa o riprendi";
+"None" = "Nessuna";
+"Clear Shortcut" = "Cancella abbreviazione";
+"Already in Use" = "Già in uso";
+"Type Shortcut…" = "Premi l’abbreviazione…";
+"Record Shortcut" = "Registra abbreviazione";
+"Library" = "Libreria";
+"Add videos to rotate between them or show a different one on each display." = "Aggiungi video per alternarli o mostrarne uno diverso su ogni monitor.";
+"Videos" = "Video";
+"Add Videos…" = "Aggiungi video…";
+"Change video" = "Cambia video";
+"Shuffle" = "Casuale";
+"Videos don't change while the wallpaper is paused or hidden." = "I video non cambiano mentre lo sfondo è in pausa o nascosto.";
+"Same as Main Video" = "Come il video principale";
+"Displays" = "Monitor";
+"Only the main video plays sound." = "Solo il video principale riproduce l’audio.";
+"Show" = "Mostra";
+"Remove from Library" = "Rimuovi dalla libreria";
+"Couldn't update the lock screen wallpaper: %@" = "Impossibile aggiornare lo sfondo della schermata di blocco: %@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Impossibile trovare «%@», il video usato l’ultima volta. Potrebbe essere stato spostato o eliminato.";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "Impossibile riprodurre «%@». Il file potrebbe essere danneggiato o in un formato non supportato.";
+"Couldn't change Launch at Login: %@" = "Impossibile modificare «Apri al login»: %@";

@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "Nicht festgelegt";
+"Playing" = "Läuft";
+"Paused" = "Pausiert";
+"Auto-Paused" = "Auto-Pause";
+"Paused while the displays are asleep" = "Pausiert, solange die Displays im Ruhezustand sind";
+"Paused while the screen is locked" = "Pausiert, solange der Bildschirm gesperrt ist";
+"Paused while windows cover the wallpaper" = "Pausiert, solange Fenster das Hintergrundbild verdecken";
+"Paused while on battery power" = "Pausiert im Batteriebetrieb";
+"Paused while Low Power Mode is on" = "Pausiert, solange der Stromsparmodus aktiv ist";
+
+/* Playback controls */
+"Pause" = "Pausieren";
+"Resume" = "Fortsetzen";
+"Mute" = "Stummschalten";
+"Unmute" = "Ton ein";
+"Volume" = "Lautstärke";
+"Scaling" = "Skalierung";
+"Fill" = "Füllen";
+"Fit" = "Anpassen";
+"Stretch" = "Dehnen";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "Im Batteriebetrieb oder Stromsparmodus pausieren";
+"Launch at login" = "Bei der Anmeldung öffnen";
+"Allow Rill in System Settings…" = "Rill in den Systemeinstellungen erlauben …";
+
+/* Video */
+"Choose Video…" = "Video auswählen …";
+"Change Video…" = "Video ändern …";
+"Change Video" = "Video ändern";
+"Choose a Video" = "Video auswählen";
+"or drop one on the menu bar icon" = "oder eines auf das Symbol in der Menüleiste ziehen";
+"Remove" = "Entfernen";
+"Remove this video from your library" = "Dieses Video aus der Mediathek entfernen";
+"Quit" = "Beenden";
+"Choose videos for your desktop wallpaper" = "Wähle Videos für dein Schreibtisch-Hintergrundbild aus";
+"Set as Wallpaper" = "Als Hintergrundbild festlegen";
+
+/* Settings */
+"Settings…" = "Einstellungen …";
+"General" = "Allgemein";
+"Language" = "Sprache";
+"Relaunch Rill to use the new language." = "Starte Rill neu, um die neue Sprache zu verwenden.";
+"Relaunch" = "Neu starten";
+"System Default (%@)" = "Systemstandard (%@)";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "Nie";
+"Space" = "Leertaste";
+"Next Video" = "Nächstes Video";
+"Show the video on the lock screen" = "Video auf dem Sperrbildschirm zeigen";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Legt ein Standbild aus dem Video als macOS-Hintergrundbild fest, das auch der Sperrbildschirm zeigt. Wenn du dies ausschaltest, kehrt dein eigenes Hintergrundbild zurück.";
+"Couldn't restore your original wallpaper." = "Dein ursprüngliches Hintergrundbild konnte nicht wiederhergestellt werden.";
+"Keyboard Shortcuts" = "Tastaturkurzbefehle";
+"Pause or Resume" = "Pausieren oder fortsetzen";
+"None" = "Keiner";
+"Clear Shortcut" = "Kurzbefehl löschen";
+"Already in Use" = "Bereits belegt";
+"Type Shortcut…" = "Kurzbefehl drücken …";
+"Record Shortcut" = "Kurzbefehl aufnehmen";
+"Library" = "Mediathek";
+"Add videos to rotate between them or show a different one on each display." = "Füge Videos hinzu, um zwischen ihnen zu wechseln oder auf jedem Display ein anderes zu zeigen.";
+"Videos" = "Videos";
+"Add Videos…" = "Videos hinzufügen …";
+"Change video" = "Video wechseln";
+"Shuffle" = "Zufällig";
+"Videos don't change while the wallpaper is paused or hidden." = "Videos wechseln nicht, während das Hintergrundbild pausiert oder verdeckt ist.";
+"Same as Main Video" = "Wie Hauptvideo";
+"Displays" = "Displays";
+"Only the main video plays sound." = "Nur das Hauptvideo gibt Ton wieder.";
+"Show" = "Zeigen";
+"Remove from Library" = "Aus Mediathek entfernen";
+"Couldn't update the lock screen wallpaper: %@" = "Hintergrundbild des Sperrbildschirms konnte nicht aktualisiert werden: %@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "„%@“, das zuletzt verwendete Video, wurde nicht gefunden. Es wurde möglicherweise bewegt oder gelöscht.";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "„%@“ kann nicht abgespielt werden. Die Datei ist möglicherweise beschädigt oder hat ein nicht unterstütztes Format.";
+"Couldn't change Launch at Login: %@" = "„Bei der Anmeldung öffnen“ konnte nicht geändert werden: %@";

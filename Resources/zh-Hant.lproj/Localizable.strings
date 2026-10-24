@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "未設定";
+"Playing" = "播放中";
+"Paused" = "已暫停";
+"Auto-Paused" = "自動暫停";
+"Paused while the displays are asleep" = "顯示器睡眠中，已自動暫停";
+"Paused while the screen is locked" = "螢幕已鎖定，已自動暫停";
+"Paused while windows cover the wallpaper" = "背景圖片被視窗完全遮住，已自動暫停";
+"Paused while on battery power" = "正在使用電池，已自動暫停";
+"Paused while Low Power Mode is on" = "低耗電模式已開啟，已自動暫停";
+
+/* Playback controls */
+"Pause" = "暫停";
+"Resume" = "繼續播放";
+"Mute" = "靜音";
+"Unmute" = "取消靜音";
+"Volume" = "音量";
+"Scaling" = "畫面";
+"Fill" = "填滿";
+"Fit" = "符合";
+"Stretch" = "延展";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "使用電池或低耗電模式時暫停";
+"Launch at login" = "登入時啟動";
+"Allow Rill in System Settings…" = "需在系統設定中允許 Rill 登入時啟動…";
+
+/* Video */
+"Choose Video…" = "選擇影片…";
+"Change Video…" = "更換影片…";
+"Change Video" = "更換影片";
+"Choose a Video" = "選擇一段影片";
+"or drop one on the menu bar icon" = "或將影片拖到選單列圖像上";
+"Remove" = "移除";
+"Remove this video from your library" = "從影片庫中移除這段影片";
+"Quit" = "結束";
+"Choose videos for your desktop wallpaper" = "選擇要做為桌面背景圖片的影片";
+"Set as Wallpaper" = "設為背景圖片";
+
+/* Settings */
+"Settings…" = "設定…";
+"General" = "一般";
+"Language" = "語言";
+"Relaunch Rill to use the new language." = "重新啟動 Rill 後即可使用新語言。";
+"Relaunch" = "重新啟動";
+"System Default (%@)" = "跟隨系統（%@）";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "永不";
+"Space" = "空白鍵";
+"Next Video" = "下一段影片";
+"Show the video on the lock screen" = "在鎖定畫面上顯示影片畫面";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "將影片的一格畫面設為系統背景圖片，鎖定畫面會顯示它。關閉後會還原你原本的背景圖片。";
+"Couldn't restore your original wallpaper." = "無法還原你原本的背景圖片。";
+"Keyboard Shortcuts" = "鍵盤快速鍵";
+"Pause or Resume" = "暫停或繼續";
+"None" = "無";
+"Clear Shortcut" = "清除快速鍵";
+"Already in Use" = "已被佔用";
+"Type Shortcut…" = "請按下快速鍵…";
+"Record Shortcut" = "錄製快速鍵";
+"Library" = "影片庫";
+"Add videos to rotate between them or show a different one on each display." = "加入多段影片後，可定時輪換，或在每台顯示器上顯示不同的影片。";
+"Videos" = "影片";
+"Add Videos…" = "加入影片…";
+"Change video" = "自動更換影片";
+"Shuffle" = "隨機順序";
+"Videos don't change while the wallpaper is paused or hidden." = "背景圖片暫停或被遮住時，不會更換影片。";
+"Same as Main Video" = "與主影片相同";
+"Displays" = "顯示器";
+"Only the main video plays sound." = "只有主影片會播放聲音。";
+"Show" = "顯示";
+"Remove from Library" = "從影片庫中移除";
+"Couldn't update the lock screen wallpaper: %@" = "無法更新鎖定畫面背景圖片：%@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "找不到上次使用的影片「%@」，它可能已被搬移或刪除。";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "無法播放「%@」，檔案可能已損毀或格式不受支援。";
+"Couldn't change Launch at Login: %@" = "無法更改登入時啟動：%@";

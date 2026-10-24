@@ -111,30 +111,30 @@ struct PanelView: View {
     }
 
     private var fillModeRow: some View {
-        HStack {
-            Text(L10n.scaling)
-                .foregroundStyle(.secondary)
-            Spacer()
-            Picker(L10n.scaling, selection: $model.fillMode) {
-                ForEach(FillMode.allCases) { mode in
-                    Text(mode.title).tag(mode)
-                }
+        // No visible label: translated labels were crushed next to the control. The label still serves VoiceOver.
+        Picker(L10n.scaling, selection: $model.fillMode) {
+            ForEach(FillMode.allCases) { mode in
+                Text(mode.title).tag(mode)
             }
-            .pickerStyle(.segmented)
-            .labelsHidden()
-            .fixedSize()
         }
+        .pickerStyle(.segmented)
+        .labelsHidden()
+        .frame(maxWidth: .infinity)
         .font(.callout)
     }
 
     private var footer: some View {
-        HStack(spacing: 14) {
+        HStack(spacing: 10) {
+            // fixedSize keeps each label on one line: next to a Spacer, SwiftUI offers a multi-word label
+            // only a share of the free width, which wrapped longer translations.
             Button(model.video == nil ? L10n.chooseVideo : L10n.changeVideo, action: chooseVideo)
+                .fixedSize()
             if model.video != nil {
                 Button(L10n.remove, action: model.removeCurrent)
                     .help(L10n.removeHelp)
+                    .fixedSize()
             }
-            Spacer()
+            Spacer(minLength: 6)
             Button(action: openSettings) {
                 Image(systemName: "gearshape")
             }
@@ -143,6 +143,7 @@ struct PanelView: View {
             .keyboardShortcut(",")
             Button(L10n.quit, action: quit)
                 .keyboardShortcut("q")
+                .fixedSize()
         }
         .buttonStyle(.borderless)
         .font(.callout)

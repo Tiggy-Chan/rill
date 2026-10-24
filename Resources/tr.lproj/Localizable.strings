@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "Ayarlanmadı";
+"Playing" = "Oynatılıyor";
+"Paused" = "Duraklatıldı";
+"Auto-Paused" = "Otomatik Duraklama";
+"Paused while the displays are asleep" = "Ekranlar uyku modundayken duraklatıldı";
+"Paused while the screen is locked" = "Ekran kilitliyken duraklatıldı";
+"Paused while windows cover the wallpaper" = "Pencereler duvar kâğıdını kapatırken duraklatıldı";
+"Paused while on battery power" = "Pil gücüyle çalışırken duraklatıldı";
+"Paused while Low Power Mode is on" = "Düşük Güç Modu açıkken duraklatıldı";
+
+/* Playback controls */
+"Pause" = "Duraklat";
+"Resume" = "Sürdür";
+"Mute" = "Sesi Kapat";
+"Unmute" = "Sesi Aç";
+"Volume" = "Ses";
+"Scaling" = "Ölçekleme";
+"Fill" = "Doldur";
+"Fit" = "Sığdır";
+"Stretch" = "Uzat";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "Pil gücünde veya Düşük Güç Modu'nda duraklat";
+"Launch at login" = "Girişte aç";
+"Allow Rill in System Settings…" = "Sistem Ayarları'nda Rill'e izin ver…";
+
+/* Video */
+"Choose Video…" = "Video Seç…";
+"Change Video…" = "Videoyu Değiştir…";
+"Change Video" = "Videoyu Değiştir";
+"Choose a Video" = "Bir Video Seçin";
+"or drop one on the menu bar icon" = "veya menü çubuğu simgesine bırakın";
+"Remove" = "Kaldır";
+"Remove this video from your library" = "Bu videoyu kütüphanenizden kaldırın";
+"Quit" = "Çık";
+"Choose videos for your desktop wallpaper" = "Masaüstü duvar kâğıdınız için video seçin";
+"Set as Wallpaper" = "Duvar Kâğıdı Olarak Ayarla";
+
+/* Settings */
+"Settings…" = "Ayarlar…";
+"General" = "Genel";
+"Language" = "Dil";
+"Relaunch Rill to use the new language." = "Yeni dili kullanmak için Rill'i yeniden açın.";
+"Relaunch" = "Yeniden Aç";
+"System Default (%@)" = "Sistem Varsayılanı (%@)";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "Hiçbir Zaman";
+"Space" = "Boşluk";
+"Next Video" = "Sonraki Video";
+"Show the video on the lock screen" = "Videoyu kilitli ekranda göster";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Videodan bir kareyi macOS duvar kâğıdınız olarak ayarlar; kilitli ekran bunu gösterir. Bunu kapattığınızda kendi duvar kâğıdınız geri gelir.";
+"Couldn't restore your original wallpaper." = "Orijinal duvar kâğıdınız geri yüklenemedi.";
+"Keyboard Shortcuts" = "Klavye Kestirmeleri";
+"Pause or Resume" = "Duraklat veya Sürdür";
+"None" = "Yok";
+"Clear Shortcut" = "Kestirmeyi Temizle";
+"Already in Use" = "Zaten Kullanılıyor";
+"Type Shortcut…" = "Kestirmeyi Yazın…";
+"Record Shortcut" = "Kestirme Kaydet";
+"Library" = "Kütüphane";
+"Add videos to rotate between them or show a different one on each display." = "Videolar arasında geçiş yapmak veya her ekranda farklı bir video göstermek için video ekleyin.";
+"Videos" = "Videolar";
+"Add Videos…" = "Video Ekle…";
+"Change video" = "Videoyu değiştir";
+"Shuffle" = "Karıştır";
+"Videos don't change while the wallpaper is paused or hidden." = "Duvar kâğıdı duraklatılmışken veya gizliyken videolar değişmez.";
+"Same as Main Video" = "Ana Videoyla Aynı";
+"Displays" = "Ekranlar";
+"Only the main video plays sound." = "Yalnızca ana video ses çalar.";
+"Show" = "Göster";
+"Remove from Library" = "Kütüphaneden Kaldır";
+"Couldn't update the lock screen wallpaper: %@" = "Kilitli ekran duvar kâğıdı güncellenemedi: %@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Son kullandığınız video “%@” bulunamıyor. Taşınmış veya silinmiş olabilir.";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "“%@” oynatılamıyor. Dosya hasarlı veya desteklenmeyen bir biçimde olabilir.";
+"Couldn't change Launch at Login: %@" = "Girişte Aç ayarı değiştirilemedi: %@";

@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "未設定";
+"Playing" = "再生中";
+"Paused" = "一時停止中";
+"Auto-Paused" = "自動停止";
+"Paused while the displays are asleep" = "ディスプレイのスリープ中は一時停止しています";
+"Paused while the screen is locked" = "画面のロック中は一時停止しています";
+"Paused while windows cover the wallpaper" = "ウインドウで壁紙が隠れているため一時停止しています";
+"Paused while on battery power" = "バッテリー電源の使用中は一時停止しています";
+"Paused while Low Power Mode is on" = "低電力モードがオンのため一時停止しています";
+
+/* Playback controls */
+"Pause" = "一時停止";
+"Resume" = "再開";
+"Mute" = "消音";
+"Unmute" = "消音を解除";
+"Volume" = "音量";
+"Scaling" = "表示";
+"Fill" = "フィル";
+"Fit" = "フィット";
+"Stretch" = "伸縮";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "バッテリー使用中や低電力モードでは一時停止";
+"Launch at login" = "ログイン時に起動";
+"Allow Rill in System Settings…" = "システム設定で Rill を許可…";
+
+/* Video */
+"Choose Video…" = "ビデオを選択…";
+"Change Video…" = "ビデオを変更…";
+"Change Video" = "ビデオを変更";
+"Choose a Video" = "ビデオを選択";
+"or drop one on the menu bar icon" = "またはメニューバーのアイコンにドロップ";
+"Remove" = "削除";
+"Remove this video from your library" = "このビデオをライブラリから削除";
+"Quit" = "終了";
+"Choose videos for your desktop wallpaper" = "デスクトップの壁紙にするビデオを選択";
+"Set as Wallpaper" = "壁紙に設定";
+
+/* Settings */
+"Settings…" = "設定…";
+"General" = "一般";
+"Language" = "言語";
+"Relaunch Rill to use the new language." = "新しい言語を使用するには Rill を再起動してください。";
+"Relaunch" = "再起動";
+"System Default (%@)" = "システムのデフォルト（%@）";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "しない";
+"Space" = "スペース";
+"Next Video" = "次のビデオ";
+"Show the video on the lock screen" = "ロック画面にビデオを表示";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "ビデオの静止画を macOS の壁紙に設定し、ロック画面にも表示します。オフにすると元の壁紙に戻ります。";
+"Couldn't restore your original wallpaper." = "元の壁紙に戻せませんでした。";
+"Keyboard Shortcuts" = "キーボードショートカット";
+"Pause or Resume" = "一時停止/再開";
+"None" = "なし";
+"Clear Shortcut" = "ショートカットを消去";
+"Already in Use" = "使用中です";
+"Type Shortcut…" = "ショートカットを入力…";
+"Record Shortcut" = "ショートカットを記録";
+"Library" = "ライブラリ";
+"Add videos to rotate between them or show a different one on each display." = "複数のビデオを追加すると、順番に切り替えたり、ディスプレイごとに別のビデオを表示したりできます。";
+"Videos" = "ビデオ";
+"Add Videos…" = "ビデオを追加…";
+"Change video" = "ビデオを変更";
+"Shuffle" = "シャッフル";
+"Videos don't change while the wallpaper is paused or hidden." = "壁紙が一時停止中または隠れている間はビデオを変更しません。";
+"Same as Main Video" = "メインのビデオと同じ";
+"Displays" = "ディスプレイ";
+"Only the main video plays sound." = "サウンドを再生するのはメインのビデオだけです。";
+"Show" = "表示";
+"Remove from Library" = "ライブラリから削除";
+"Couldn't update the lock screen wallpaper: %@" = "ロック画面の壁紙を更新できませんでした：%@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "前回使用したビデオ「%@」が見つかりません。移動または削除された可能性があります。";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "「%@」を再生できません。ファイルが壊れているか、サポートされていないフォーマットの可能性があります。";
+"Couldn't change Launch at Login: %@" = "ログイン時の起動を変更できませんでした：%@";

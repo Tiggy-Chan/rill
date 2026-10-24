@@ -1,0 +1,79 @@
+/* Status */
+"Not Set" = "설정 안 됨";
+"Playing" = "재생 중";
+"Paused" = "일시 정지됨";
+"Auto-Paused" = "자동 정지됨";
+"Paused while the displays are asleep" = "디스플레이가 잠자기 중이라 일시 정지됨";
+"Paused while the screen is locked" = "화면이 잠겨 있어 일시 정지됨";
+"Paused while windows cover the wallpaper" = "윈도우가 배경화면을 가리고 있어 일시 정지됨";
+"Paused while on battery power" = "배터리 전원 사용 중이라 일시 정지됨";
+"Paused while Low Power Mode is on" = "저전력 모드가 켜져 있어 일시 정지됨";
+
+/* Playback controls */
+"Pause" = "일시 정지";
+"Resume" = "재개";
+"Mute" = "음소거";
+"Unmute" = "음소거 해제";
+"Volume" = "음량";
+"Scaling" = "화면 크기";
+"Fill" = "채우기";
+"Fit" = "맞추기";
+"Stretch" = "늘이기";
+
+/* Options */
+"Pause on battery or in Low Power Mode" = "배터리 사용 중이거나 저전력 모드일 때 일시 정지";
+"Launch at login" = "로그인 시 실행";
+"Allow Rill in System Settings…" = "시스템 설정에서 Rill 허용…";
+
+/* Video */
+"Choose Video…" = "비디오 선택…";
+"Change Video…" = "비디오 변경…";
+"Change Video" = "비디오 변경";
+"Choose a Video" = "비디오 선택";
+"or drop one on the menu bar icon" = "또는 메뉴 막대 아이콘에 끌어다 놓기";
+"Remove" = "제거";
+"Remove this video from your library" = "보관함에서 이 비디오 제거";
+"Quit" = "종료";
+"Choose videos for your desktop wallpaper" = "데스크탑 배경화면으로 사용할 비디오 선택";
+"Set as Wallpaper" = "배경화면으로 설정";
+
+/* Settings */
+"Settings…" = "설정…";
+"General" = "일반";
+"Language" = "언어";
+"Relaunch Rill to use the new language." = "새 언어를 사용하려면 Rill을 다시 실행하십시오.";
+"Relaunch" = "다시 실행";
+"System Default (%@)" = "시스템 기본값(%@)";
+
+/* Library, rotation, displays, shortcuts, lock screen */
+"Never" = "안 함";
+"Space" = "스페이스";
+"Next Video" = "다음 비디오";
+"Show the video on the lock screen" = "잠금 화면에 비디오 표시";
+"Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "비디오의 정지 화면을 macOS 배경화면으로 설정하며, 잠금 화면에도 표시됩니다. 끄면 원래 배경화면으로 돌아갑니다.";
+"Couldn't restore your original wallpaper." = "원래 배경화면을 복원할 수 없습니다.";
+"Keyboard Shortcuts" = "키보드 단축키";
+"Pause or Resume" = "일시 정지 또는 재개";
+"None" = "없음";
+"Clear Shortcut" = "단축키 지우기";
+"Already in Use" = "이미 사용 중";
+"Type Shortcut…" = "단축키 입력…";
+"Record Shortcut" = "단축키 기록";
+"Library" = "보관함";
+"Add videos to rotate between them or show a different one on each display." = "비디오를 여러 개 추가하면 번갈아 표시하거나 디스플레이마다 다른 비디오를 표시할 수 있습니다.";
+"Videos" = "비디오";
+"Add Videos…" = "비디오 추가…";
+"Change video" = "비디오 변경";
+"Shuffle" = "임의 재생";
+"Videos don't change while the wallpaper is paused or hidden." = "배경화면이 일시 정지되었거나 가려져 있는 동안에는 비디오가 바뀌지 않습니다.";
+"Same as Main Video" = "주 비디오와 동일";
+"Displays" = "디스플레이";
+"Only the main video plays sound." = "주 비디오만 사운드를 재생합니다.";
+"Show" = "표시";
+"Remove from Library" = "보관함에서 제거";
+"Couldn't update the lock screen wallpaper: %@" = "잠금 화면 배경화면을 업데이트할 수 없습니다: %@";
+
+/* Problems */
+"Can't find “%@”, the video you used last time. It may have been moved or deleted." = "지난번에 사용한 비디오 ‘%@’을(를) 찾을 수 없습니다. 이동되었거나 삭제되었을 수 있습니다.";
+"Can't play “%@”. The file may be damaged or in an unsupported format." = "‘%@’을(를) 재생할 수 없습니다. 파일이 손상되었거나 지원되지 않는 포맷일 수 있습니다.";
+"Couldn't change Launch at Login: %@" = "로그인 시 실행 설정을 변경할 수 없습니다: %@";

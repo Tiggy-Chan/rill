@@ -392,20 +392,31 @@ final class AppModel {
         metadataTask?.cancel()
         guard let id = currentItemID, let url = resolvedURLs[id] else { return }
         metadataTask = Task { [weak self] in
-            let access = SecurityScopedAccess(url)
-            defer { withExtendedLifetime(access) {} }
-            let asset = AVURLAsset(url: url)
-            let duration = try? await asset.load(.duration)
-            var pixelSize: CGSize?
-            if let track = try? await asset.loadTracks(withMediaType: .video).first,
-               let geometry = try? await track.load(.naturalSize, .preferredTransform) {
-                let rect = CGRect(origin: .zero, size: geometry.0).applying(geometry.1)
-                pixelSize = CGSize(width: abs(rect.width), height: abs(rect.height))
-            }
+            let metadata = await Self.readMetadata(of: url)
             guard !Task.isCancelled, let self, self.video?.id == id else { return }
-            self.video?.pixelSize = pixelSize
-            self.video?.duration = duration.map(CMTimeGetSeconds)
+            self.video?.pixelSize = metadata.pixelSize
+            self.video?.duration = metadata.duration
         }
+    }
+
+    private struct Metadata: Sendable {
+        var pixelSize: CGSize?
+        var duration: Double?
+    }
+
+    /// Runs off the main actor so an AVAssetTrack, which older SDKs don't mark Sendable, never crosses an isolation boundary.
+    private nonisolated static func readMetadata(of url: URL) async -> Metadata {
+        let access = SecurityScopedAccess(url)
+        defer { withExtendedLifetime(access) {} }
+        let asset = AVURLAsset(url: url)
+        let duration = try? await asset.load(.duration)
+        var pixelSize: CGSize?
+        if let track = try? await asset.loadTracks(withMediaType: .video).first,
+           let geometry = try? await track.load(.naturalSize, .preferredTransform) {
+            let rect = CGRect(origin: .zero, size: geometry.0).applying(geometry.1)
+            pixelSize = CGSize(width: abs(rect.width), height: abs(rect.height))
+        }
+        return Metadata(pixelSize: pixelSize, duration: duration.map(CMTimeGetSeconds))
     }
 
     // MARK: - Rotation

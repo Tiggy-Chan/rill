@@ -158,10 +158,10 @@ final class StatusItemController: NSObject, NSPopoverDelegate, NSWindowDelegate,
     }
 
     private func videoURLs(from info: NSDraggingInfo) -> [URL] {
-        let options: [NSPasteboard.ReadingOptionKey: Any] = [
-            .urlReadingFileURLsOnly: true,
-            .urlReadingContentsConformToTypes: [UTType.movie.identifier],
-        ]
-        return info.draggingPasteboard.readObjects(forClasses: [NSURL.self], options: options) as? [URL] ?? []
+        // No conformance filter here: convertible containers often carry only a
+        // dynamic UTType; ContainerKind judges by extension or declared type.
+        let options: [NSPasteboard.ReadingOptionKey: Any] = [.urlReadingFileURLsOnly: true]
+        let urls = info.draggingPasteboard.readObjects(forClasses: [NSURL.self], options: options) as? [URL] ?? []
+        return urls.filter { ContainerKind.isAcceptable($0) }
     }
 }

@@ -14,6 +14,9 @@ struct PanelView: View {
             if let problem = model.problem {
                 ProblemBanner(message: problem)
             }
+            if let note = model.note {
+                NoteBanner(message: note)
+            }
             PreviewCard(model: model, chooseVideo: chooseVideo)
             if let video = model.video {
                 details(for: video)
@@ -167,6 +170,26 @@ private struct ProblemBanner: View {
         .padding(.vertical, 8)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+    }
+}
+
+/// Same shape as the problem banner, but informational: nothing went wrong.
+private struct NoteBanner: View {
+    let message: String
+
+    var body: some View {
+        Label {
+            Text(message)
+                .fixedSize(horizontal: false, vertical: true)
+        } icon: {
+            Image(systemName: "arrow.triangle.2.circlepath")
+                .foregroundStyle(.tint)
+        }
+        .font(.caption)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.quaternary.opacity(0.5), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
     }
 }
 

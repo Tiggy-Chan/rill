@@ -5,10 +5,11 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 DEV="$(xcode-select -p)"
-ARGS=()
+# The converter links FFmpeg from Vendor; test executables find the dylibs through this rpath.
+ARGS=(-Xlinker -rpath -Xlinker "$PWD/Vendor/ffmpeg/lib")
 if [[ "$DEV" == *CommandLineTools* ]]; then
     FW="$DEV/Library/Developer/Frameworks"
-    ARGS=(
+    ARGS+=(
         -Xswiftc -F -Xswiftc "$FW"
         -Xlinker -rpath -Xlinker "$FW"
         -Xlinker -rpath -Xlinker "$DEV/Library/Developer/usr/lib"

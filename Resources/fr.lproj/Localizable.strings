@@ -69,3 +69,8 @@
 "Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Impossible de trouver « %@ », la vidéo utilisée la dernière fois. Elle a peut-être été déplacée ou supprimée.";
 "Can't play “%@”. The file may be damaged or in an unsupported format." = "Impossible de lire « %@ ». Le fichier est peut-être endommagé ou dans un format non pris en charge.";
 "Couldn't change Launch at Login: %@" = "Impossible de modifier « Ouvrir à la connexion » : %@";
+
+/* Conversion */
+"Converting “%@” for playback…" = "Conversion de « %@ » pour la lecture…";
+"Can't convert “%@”. Its video codec isn't supported — use an H.264 or HEVC video instead." = "Impossible de convertir « %@ ». Son codec vidéo n'est pas pris en charge — utilisez une vidéo H.264 ou HEVC.";
+"Couldn't convert “%@” to a playable format." = "Impossible de convertir « %@ » dans un format lisible.";

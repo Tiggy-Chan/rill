@@ -10,6 +10,7 @@ A small native macOS app that plays video as your desktop wallpaper. It lives in
 - **A different video on each display.** Every display follows the main video unless you pick one for it.
 - **A library that rotates.** Add as many videos as you like and switch between them by hand, on a schedule from every 15 minutes to once a day, in order or shuffled.
 - **Seamless, quiet loop.** Looping has no gaps, decoding uses the hardware, and sound is muted by default. Displays showing the same video share one decoder. In testing on Apple Silicon, a 4K H.264 loop used about 2% CPU.
+- **Plays MKV and friends.** Videos in containers the system can't open — MKV and WebM, AVI, FLV, including `.mp4` files that are secretly Matroska — are converted to MP4 automatically on import, without re-encoding.
 - **Pauses when it can't be seen.** Each video stops while the displays sleep, while the screen is locked, or while windows fully cover every display showing it. It can also pause on battery power or in Low Power Mode. Rotation waits while the wallpaper is paused.
 - **Lock screen to match.** Optionally, Rill sets a still from the video as your macOS wallpaper, which is what the lock screen shows. Your own wallpaper comes back when you turn it off. It's off by default.
 - **Simple menu bar panel.** A live preview, play/pause, next, mute and volume, and fill / fit / stretch. Everything else lives in Settings (⌘,).
@@ -28,7 +29,8 @@ There are no prebuilt releases yet, so build it from source:
 ```sh
 git clone https://github.com/Tiggy-Chan/rill.git
 cd rill
-./Scripts/build.sh                  # creates build/Rill.app
+./Scripts/fetch-ffmpeg.sh       # builds the bundled FFmpeg libraries once (~2 minutes)
+./Scripts/build.sh              # creates build/Rill.app
 cp -R build/Rill.app /Applications/
 open /Applications/Rill.app
 ```
@@ -46,7 +48,7 @@ The app is ad-hoc signed and not notarized. It opens normally on the Mac that bu
 
 **Remove** in the panel takes the current video out of your library. **Quit** closes the app and your normal wallpaper shows again. Rill only changes your system wallpaper while lock screen sync is on.
 
-Rill plays any format AVFoundation supports, such as H.264 or HEVC in `.mp4`, `.mov` or `.m4v` files. With Fill, a video that matches your screen's aspect ratio shows the most of the frame.
+Rill plays any format the system supports, such as H.264 or HEVC in `.mp4`, `.mov` or `.m4v` files. Videos in containers the system can't open — MKV and WebM, AVI, FLV — are stream-copied into an MP4 file in Rill's own storage when you add them (about a second per gigabyte), and the copy is reused until the source file changes; removing the video deletes its copy. The video itself must be H.264 or HEVC — other codecs can't be converted without re-encoding, and Rill says so instead of failing silently. With Fill, a video that matches your screen's aspect ratio shows the most of the frame.
 
 ## How it works
 
@@ -55,9 +57,10 @@ Rill opens one borderless window per display, one level above the desktop window
 ## Development
 
 ```sh
-./Scripts/build.sh      # low-priority release build (CONFIG=debug, JOBS=n to override)
-./Scripts/test.sh       # unit tests (Swift Testing); works with only the Command Line Tools
-./Scripts/make-icon.sh  # regenerates Resources/AppIcon.icns from Scripts/make-icon.swift
+./Scripts/fetch-ffmpeg.sh  # builds the bundled FFmpeg libraries into Vendor/ (needed once before build/test)
+./Scripts/build.sh         # low-priority release build (CONFIG=debug, JOBS=n to override)
+./Scripts/test.sh          # unit tests (Swift Testing); works with only the Command Line Tools
+./Scripts/make-icon.sh     # regenerates Resources/AppIcon.icns from Scripts/make-icon.swift
 ```
 
 ```
@@ -66,9 +69,11 @@ Sources/Rill/
 ├─ UI/          SwiftUI panel, settings window, all user-facing strings
 ├─ Library/     library items, rotation, display assignment
 ├─ Wallpaper/   desktop-level windows and lock screen sync
-├─ Playback/    looping player, pause policy, system monitoring
+├─ Playback/    looping player, pause policy, system monitoring, container sniffing and remuxing
 └─ Settings/    persisted preferences and language choice
+Sources/CRemux/           C bridge: stream-copies MKV/AVI/FLV into MP4 through FFmpeg
 Resources/      Info.plist, entitlements, privacy manifest, icon, *.lproj
+Vendor/         FFmpeg build output (rebuilt by Scripts/fetch-ffmpeg.sh, not checked in)
 ```
 
 To add a string, add it to `Sources/Rill/UI/Strings.swift` and to every `Resources/*.lproj/Localizable.strings`. The tests fail if any language is missing a key or drops a `%@`.
@@ -82,3 +87,5 @@ To add a string, add it to `Sources/Rill/UI/Strings.swift` and to every `Resourc
 ## License
 
 Rill is open-source software licensed under the [GNU General Public License v3.0](LICENSE). Copyright © 2026 Tiggy-Chan.
+
+Rill bundles FFmpeg libraries built under the GNU LGPLv2.1: `Scripts/fetch-ffmpeg.sh` records the exact source, checksum and build flags, and the license text ships inside the app.

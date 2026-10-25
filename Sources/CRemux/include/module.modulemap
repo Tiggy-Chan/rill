@@ -1,0 +1,4 @@
+module CRemux {
+    header "remux.h"
+    export *
+}

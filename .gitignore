@@ -1,6 +1,7 @@
 .build/
 .swiftpm/
 build/
+Vendor/
 *.mp4
 *.mov
 *.m4v

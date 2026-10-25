@@ -23,6 +23,17 @@ jobs:
       - name: Swift version
         run: swift --version
 
+      - name: FFmpeg cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            Vendor/ffmpeg
+            Vendor/dist/ffmpeg-*.tar.xz
+          key: ffmpeg-7.1.1-v1
+
+      - name: Build FFmpeg
+        run: JOBS=3 ./Scripts/fetch-ffmpeg.sh
+
       - name: Test
         run: JOBS=3 ./Scripts/test.sh
 
@@ -35,3 +46,4 @@ jobs:
           entitlements=$(codesign -d --entitlements - build/Rill.app 2>/dev/null)
           grep -q com.apple.security.app-sandbox <<< "$entitlements"
           ls build/Rill.app/Contents/Resources/*.lproj >/dev/null
+          ls build/Rill.app/Contents/Frameworks/*.dylib >/dev/null

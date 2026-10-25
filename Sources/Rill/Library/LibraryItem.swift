@@ -5,6 +5,10 @@ struct LibraryItem: Codable, Identifiable, Equatable, Sendable {
     var name: String
     /// Security-scoped bookmark: the only way a sandboxed app can reopen the file after relaunch.
     var bookmark: Data
+    /// MP4 copy playback uses when the container needs converting, with the source
+    /// size it was made from so replacing the source file invalidates the copy.
+    var convertedPath: String?
+    var convertedFromSize: Int?
 
     init(id: UUID, name: String, bookmark: Data) {
         self.id = id

@@ -78,6 +78,8 @@ final class AppModel {
     private(set) var isPaused = false
     private(set) var autoPauseReason: PauseReason?
     private(set) var problem: String?
+    /// Non-error status line, e.g. while a video is being converted for playback.
+    private(set) var note: String?
     private(set) var launchAtLogin: SMAppService.Status = SMAppService.mainApp.status
 
     var pauseWhenSavingPower = true {
@@ -155,6 +157,9 @@ final class AppModel {
     @ObservationIgnored private var active: [UUID: ActivePlayer] = [:]
     @ObservationIgnored private var assignment: [String: UUID] = [:]
     @ObservationIgnored private var metadataTask: Task<Void, Never>?
+    @ObservationIgnored private var conversionTask: Task<Void, Never>?
+    @ObservationIgnored private var containerKinds: [UUID: ContainerKind] = [:]
+    @ObservationIgnored private var sourceSizes: [UUID: Int] = [:]
     @ObservationIgnored private var rotationTimer: Timer?
 
     init(settings: SettingsStore = SettingsStore()) {
@@ -188,6 +193,9 @@ final class AppModel {
         for var item in settings.library {
             if let url = item.resolve() {
                 resolvedURLs[item.id] = url
+                let probe = Self.probe(url)
+                containerKinds[item.id] = probe.kind
+                if let size = probe.size { sourceSizes[item.id] = size }
                 items.append(item)
             } else {
                 missing.append(item.name)
@@ -202,6 +210,8 @@ final class AppModel {
             problem = L10n.cantFindLastVideo(name)
         }
         currentDidChange()
+        RemuxStore.removeOrphans(keeping: Set(library.map(\.id)))
+        scheduleConversionIfNeeded()
     }
 
     /// Adds videos that aren't in the library yet and shows the first of `urls`.
@@ -216,12 +226,16 @@ final class AppModel {
             guard let item = LibraryItem(url: url) else { continue }
             library.append(item)
             resolvedURLs[item.id] = url
+            let probe = Self.probe(url)
+            containerKinds[item.id] = probe.kind
+            if let size = probe.size { sourceSizes[item.id] = size }
             firstID = firstID ?? item.id
         }
         settings.library = library
         if let firstID {
             select(firstID)
         }
+        scheduleConversionIfNeeded()
     }
 
     func select(_ id: UUID) {
@@ -235,6 +249,9 @@ final class AppModel {
     func remove(_ id: UUID) {
         library.removeAll { $0.id == id }
         resolvedURLs[id] = nil
+        containerKinds[id] = nil
+        sourceSizes[id] = nil
+        RemuxStore.discardCache(for: id)
         displayOverrides = displayOverrides.filter { $0.value != id }
         settings.library = library
         settings.displayVideos = displayOverrides
@@ -251,6 +268,82 @@ final class AppModel {
         }
     }
 
+    // MARK: - Container conversion
+
+    /// Reads the container kind and size of a source file under sandbox access.
+    private static func probe(_ url: URL) -> (kind: ContainerKind, size: Int?) {
+        let access = SecurityScopedAccess(url)
+        defer { withExtendedLifetime(access) {} }
+        return (ContainerKind.sniff(url: url), (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize)
+    }
+
+    /// Starts converting the first item that still needs it, one at a time: the
+    /// copy is disk-bound, so running several at once would only slow the first.
+    private func scheduleConversionIfNeeded() {
+        guard conversionTask == nil else { return }
+        guard let item = library.first(where: needsConversion(_:)) else {
+            if note != nil { note = nil }
+            return
+        }
+        guard let source = resolvedURLs[item.id] else { return }
+        note = L10n.preparing(item.name)
+        let id = item.id
+        let destination = RemuxStore.cacheURL(for: id)
+        conversionTask = Task { [weak self] in
+            let outcome = await Remuxer.convert(source: source, to: destination)
+            self?.conversionFinished(id, outcome: outcome)
+        }
+    }
+
+    private func needsConversion(_ item: LibraryItem) -> Bool {
+        guard containerKinds[item.id]?.needsConversion == true else { return false }
+        guard let path = item.convertedPath else { return true }
+        return !RemuxStore.cacheIsCurrent(
+            recordedCachePath: path,
+            recordedSourceSize: item.convertedFromSize,
+            currentSourceSize: sourceSizes[item.id],
+            cacheFileExists: FileManager.default.fileExists(atPath: path)
+        )
+    }
+
+    private func conversionFinished(_ id: UUID, outcome: RemuxOutcome) {
+        conversionTask = nil
+        guard let index = library.firstIndex(where: { $0.id == id }) else {
+            // Removed while converting; drop the leftovers.
+            RemuxStore.discardCache(for: id)
+            note = nil
+            scheduleConversionIfNeeded()
+            return
+        }
+        switch outcome {
+        case .done:
+            if sourceSizes[id] == nil, let size = resolvedURLs[id].flatMap({ Self.probe($0).size }) {
+                sourceSizes[id] = size
+            }
+            if let size = sourceSizes[id] {
+                library[index].convertedPath = RemuxStore.cacheURL(for: id).path
+                library[index].convertedFromSize = size
+                settings.library = library
+                note = nil
+                currentDidChange()
+            } else {
+                failConversion(id, message: L10n.convertFailed(library[index].name))
+            }
+        case .unsupportedVideoCodec:
+            failConversion(id, message: L10n.cantConvert(library[index].name))
+        case .failed:
+            failConversion(id, message: L10n.convertFailed(library[index].name))
+        }
+        scheduleConversionIfNeeded()
+    }
+
+    private func failConversion(_ id: UUID, message: String) {
+        note = nil
+        remove(id)
+        problem = message
+        onProblem?()
+    }
+
     func showNext() {
         guard let next = Rotation.next(after: currentItemID, in: playableIDs, shuffle: shuffle), next != currentItemID else {
             return
@@ -265,7 +358,22 @@ final class AppModel {
     }
 
     private var playableIDs: [UUID] {
-        library.map(\.id).filter { resolvedURLs[$0] != nil }
+        library.map(\.id).filter { playbackURL(for: $0) != nil }
+    }
+
+    /// What playback actually opens: the converted copy for containers AVFoundation
+    /// can't demux, otherwise the original file. Nil while a conversion is pending.
+    private func playbackURL(for id: UUID) -> URL? {
+        guard let url = resolvedURLs[id], let item = library.first(where: { $0.id == id }) else { return nil }
+        guard containerKinds[id]?.needsConversion == true else { return url }
+        guard let path = item.convertedPath else { return nil }
+        guard RemuxStore.cacheIsCurrent(
+            recordedCachePath: path,
+            recordedSourceSize: item.convertedFromSize,
+            currentSourceSize: sourceSizes[id],
+            cacheFileExists: FileManager.default.fileExists(atPath: path)
+        ) else { return nil }
+        return URL(fileURLWithPath: path)
     }
 
     private func currentDidChange() {
@@ -298,23 +406,26 @@ final class AppModel {
         displays = screens.compactMap { screen in
             screen.displayKey.map { DisplayInfo(id: $0, name: screen.localizedName) }
         }
+        let playbackURLs = Dictionary(uniqueKeysWithValues: playableIDs.compactMap { id in
+            playbackURL(for: id).map { (id, $0) }
+        })
         assignment = DisplayAssignment.resolve(
             displays: displays.map(\.id),
             overrides: displayOverrides,
             mainItem: currentItemID,
-            available: Set(resolvedURLs.keys)
+            available: Set(playbackURLs.keys)
         )
 
         // One engine per distinct video: displays showing the same video share its decoder.
         var needed = Set(assignment.values)
-        if let currentItemID, resolvedURLs[currentItemID] != nil {
+        if let currentItemID, playbackURLs[currentItemID] != nil {
             needed.insert(currentItemID)
         }
         for id in active.keys where !needed.contains(id) {
             active.removeValue(forKey: id)?.engine.unload()
         }
         for id in needed where active[id] == nil {
-            guard let url = resolvedURLs[id] else { continue }
+            guard let url = playbackURLs[id] else { continue }
             let access = SecurityScopedAccess(url)
             let engine = PlaybackEngine()
             engine.onFailure = { [weak self] in self?.handlePlaybackFailure(id) }

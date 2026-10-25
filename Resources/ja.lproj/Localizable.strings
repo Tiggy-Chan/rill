@@ -69,3 +69,8 @@
 "Can't find “%@”, the video you used last time. It may have been moved or deleted." = "前回使用したビデオ「%@」が見つかりません。移動または削除された可能性があります。";
 "Can't play “%@”. The file may be damaged or in an unsupported format." = "「%@」を再生できません。ファイルが壊れているか、サポートされていないフォーマットの可能性があります。";
 "Couldn't change Launch at Login: %@" = "ログイン時の起動を変更できませんでした：%@";
+
+/* Conversion */
+"Converting “%@” for playback…" = "再生できるよう「%@」を変換しています…";
+"Can't convert “%@”. Its video codec isn't supported — use an H.264 or HEVC video instead." = "「%@」を変換できません。動画コーデックが対応していません。H.264 または HEVC の動画を使用してください。";
+"Couldn't convert “%@” to a playable format." = "「%@」を再生可能な形式に変換できませんでした。";

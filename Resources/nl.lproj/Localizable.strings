@@ -69,3 +69,8 @@
 "Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Kan ‘%@’, de video die je de vorige keer gebruikte, niet vinden. Misschien is deze verplaatst of verwijderd.";
 "Can't play “%@”. The file may be damaged or in an unsupported format." = "Kan ‘%@’ niet afspelen. Het bestand is mogelijk beschadigd of heeft een niet-ondersteunde indeling.";
 "Couldn't change Launch at Login: %@" = "Kan ‘Open bij inloggen’ niet wijzigen: %@";
+
+/* Conversion */
+"Converting “%@” for playback…" = "‘%@’ wordt geconverteerd voor afspelen…";
+"Can't convert “%@”. Its video codec isn't supported — use an H.264 or HEVC video instead." = "‘%@’ kan niet worden geconverteerd. De videocodec wordt niet ondersteund — gebruik een H.264- of HEVC-video.";
+"Couldn't convert “%@” to a playable format." = "‘%@’ kon niet worden geconverteerd naar een afspeelbaar formaat.";

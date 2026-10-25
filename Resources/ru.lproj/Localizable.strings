@@ -69,3 +69,8 @@
 "Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Не удается найти «%@» — видео, которое вы использовали в прошлый раз. Возможно, оно перемещено или удалено.";
 "Can't play “%@”. The file may be damaged or in an unsupported format." = "Не удается воспроизвести «%@». Возможно, файл поврежден или имеет неподдерживаемый формат.";
 "Couldn't change Launch at Login: %@" = "Не удалось изменить запуск при входе: %@";
+
+/* Conversion */
+"Converting “%@” for playback…" = "Преобразование «%@» для воспроизведения…";
+"Can't convert “%@”. Its video codec isn't supported — use an H.264 or HEVC video instead." = "Не удалось преобразовать «%@»: видеокодек не поддерживается. Используйте видео H.264 или HEVC.";
+"Couldn't convert “%@” to a playable format." = "Не удалось преобразовать «%@» в воспроизводимый формат.";

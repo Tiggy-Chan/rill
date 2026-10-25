@@ -69,3 +69,8 @@
 "Can't find “%@”, the video you used last time. It may have been moved or deleted." = "找不到上次使用的视频「%@」，它可能被移动或删除了。";
 "Can't play “%@”. The file may be damaged or in an unsupported format." = "无法播放「%@」，文件可能已损坏或格式不受支持。";
 "Couldn't change Launch at Login: %@" = "无法更改登录时启动：%@";
+
+/* Conversion */
+"Converting “%@” for playback…" = "正在转换「%@」以便播放…";
+"Can't convert “%@”. Its video codec isn't supported — use an H.264 or HEVC video instead." = "无法转换「%@」。它的视频编码不受支持——请改用 H.264 或 HEVC 视频。";
+"Couldn't convert “%@” to a playable format." = "无法将「%@」转换为可播放的格式。";

@@ -5,7 +5,7 @@ enum VideoPicker {
     /// Shows an open panel for one or more videos. Returns nil when cancelled.
     static func run() -> [URL]? {
         let panel = NSOpenPanel()
-        panel.allowedContentTypes = [.movie]
+        panel.allowedContentTypes = ContainerKind.openPanelTypes
         panel.allowsMultipleSelection = true
         panel.canChooseDirectories = false
         panel.message = L10n.openPanelMessage

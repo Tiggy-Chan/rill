@@ -69,3 +69,8 @@
 "Can't find “%@”, the video you used last time. It may have been moved or deleted." = "Son kullandığınız video “%@” bulunamıyor. Taşınmış veya silinmiş olabilir.";
 "Can't play “%@”. The file may be damaged or in an unsupported format." = "“%@” oynatılamıyor. Dosya hasarlı veya desteklenmeyen bir biçimde olabilir.";
 "Couldn't change Launch at Login: %@" = "Girişte Aç ayarı değiştirilemedi: %@";
+
+/* Conversion */
+"Converting “%@” for playback…" = "\"%@\" oynatma için dönüştürülüyor…";
+"Can't convert “%@”. Its video codec isn't supported — use an H.264 or HEVC video instead." = "\"%@\" dönüştürülemiyor. Video codec bileşeni desteklenmiyor — H.264 veya HEVC videosu kullanın.";
+"Couldn't convert “%@” to a playable format." = "\"%@\" oynatılabilir bir formata dönüştürülemedi.";

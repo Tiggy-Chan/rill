@@ -89,6 +89,19 @@ enum L10n {
         String(localized: "Can't play “\(name)”. The file may be damaged or in an unsupported format.")
     }
 
+    // Conversion
+    static func preparing(_ name: String) -> String {
+        String(localized: "Converting “\(name)” for playback…")
+    }
+
+    static func cantConvert(_ name: String) -> String {
+        String(localized: "Can't convert “\(name)”. Its video codec isn't supported — use an H.264 or HEVC video instead.")
+    }
+
+    static func convertFailed(_ name: String) -> String {
+        String(localized: "Couldn't convert “\(name)” to a playable format.")
+    }
+
     static func cantChangeLaunchAtLogin(_ reason: String) -> String {
         String(localized: "Couldn't change Launch at Login: \(reason)")
     }

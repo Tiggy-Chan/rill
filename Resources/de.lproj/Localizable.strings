@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "Nie";
-"Space" = "Leertaste";
 "Next Video" = "Nächstes Video";
 "Show the video on the lock screen" = "Video auf dem Sperrbildschirm zeigen";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Legt ein Standbild aus dem Video als macOS-Hintergrundbild fest, das auch der Sperrbildschirm zeigt. Wenn du dies ausschaltest, kehrt dein eigenes Hintergrundbild zurück.";
 "Couldn't restore your original wallpaper." = "Dein ursprüngliches Hintergrundbild konnte nicht wiederhergestellt werden.";
-"Keyboard Shortcuts" = "Tastaturkurzbefehle";
-"Pause or Resume" = "Pausieren oder fortsetzen";
-"None" = "Keiner";
-"Clear Shortcut" = "Kurzbefehl löschen";
-"Already in Use" = "Bereits belegt";
-"Type Shortcut…" = "Kurzbefehl drücken …";
-"Record Shortcut" = "Kurzbefehl aufnehmen";
 "Library" = "Mediathek";
 "Add videos to rotate between them or show a different one on each display." = "Füge Videos hinzu, um zwischen ihnen zu wechseln oder auf jedem Display ein anderes zu zeigen.";
 "Videos" = "Videos";

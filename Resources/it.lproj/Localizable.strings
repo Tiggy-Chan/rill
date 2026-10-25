@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "Mai";
-"Space" = "Spazio";
 "Next Video" = "Video successivo";
 "Show the video on the lock screen" = "Mostra il video nella schermata di blocco";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Imposta un fotogramma del video come sfondo di macOS, che appare anche nella schermata di blocco. Il tuo sfondo torna quando disattivi questa opzione.";
 "Couldn't restore your original wallpaper." = "Impossibile ripristinare lo sfondo originale.";
-"Keyboard Shortcuts" = "Abbreviazioni da tastiera";
-"Pause or Resume" = "Pausa o riprendi";
-"None" = "Nessuna";
-"Clear Shortcut" = "Cancella abbreviazione";
-"Already in Use" = "Già in uso";
-"Type Shortcut…" = "Premi l’abbreviazione…";
-"Record Shortcut" = "Registra abbreviazione";
 "Library" = "Libreria";
 "Add videos to rotate between them or show a different one on each display." = "Aggiungi video per alternarli o mostrarne uno diverso su ogni monitor.";
 "Videos" = "Video";

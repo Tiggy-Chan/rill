@@ -11,7 +11,6 @@ A small native macOS app that plays video as your desktop wallpaper. It lives in
 - **A library that rotates.** Add as many videos as you like and switch between them by hand, on a schedule from every 15 minutes to once a day, in order or shuffled.
 - **Seamless, quiet loop.** Looping has no gaps, decoding uses the hardware, and sound is muted by default. Displays showing the same video share one decoder. In testing on Apple Silicon, a 4K H.264 loop used about 2% CPU.
 - **Pauses when it can't be seen.** Each video stops while the displays sleep, while the screen is locked, or while windows fully cover every display showing it. It can also pause on battery power or in Low Power Mode. Rotation waits while the wallpaper is paused.
-- **Keyboard shortcuts.** Set system-wide shortcuts to pause or resume and to skip to the next video. No Accessibility permission is needed.
 - **Lock screen to match.** Optionally, Rill sets a still from the video as your macOS wallpaper, which is what the lock screen shows. Your own wallpaper comes back when you turn it off. It's off by default.
 - **Simple menu bar panel.** A live preview, play/pause, next, mute and volume, and fill / fit / stretch. Everything else lives in Settings (⌘,).
 - **Speaks your language.** English, Simplified and Traditional Chinese, Japanese, Korean, German, French, Spanish, Italian, Brazilian Portuguese, Russian, Dutch, Polish and Turkish. Rill follows your system language, or you can pick one in Settings.
@@ -42,7 +41,7 @@ The app is ad-hoc signed and not notarized. It opens normally on the Mac that bu
 2. Click **Choose Video…** or the preview area, drop videos onto the menu bar icon, or use **Open With › Rill** in Finder. New videos are added to your library and the first one starts playing.
 3. From the panel, pause or resume, skip to the next video, change the volume, and choose Fill, Fit or Stretch. Press Esc or click elsewhere to close it.
 4. Open **Settings…** with the gear button or ⌘, for everything else:
-   - **General:** launch at login, pausing on battery, lock screen sync, keyboard shortcuts and language.
+   - **General:** launch at login, pausing on battery, lock screen sync and language.
    - **Library:** add and remove videos, pick the main video, set how often it changes and whether to shuffle. With more than one display connected, choose a video for each display.
 
 **Remove** in the panel takes the current video out of your library. **Quit** closes the app and your normal wallpaper shows again. Rill only changes your system wallpaper while lock screen sync is on.
@@ -68,7 +67,6 @@ Sources/Rill/
 ├─ Library/     library items, rotation, display assignment
 ├─ Wallpaper/   desktop-level windows and lock screen sync
 ├─ Playback/    looping player, pause policy, system monitoring
-├─ Shortcuts/   system-wide hot keys
 └─ Settings/    persisted preferences and language choice
 Resources/      Info.plist, entitlements, privacy manifest, icon, *.lproj
 ```

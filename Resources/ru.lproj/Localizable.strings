@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "Никогда";
-"Space" = "Пробел";
 "Next Video" = "Следующее видео";
 "Show the video on the lock screen" = "Показывать видео на экране блокировки";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Кадр из видео становится обоями macOS, которые показывает экран блокировки. Если выключить, вернутся ваши прежние обои.";
 "Couldn't restore your original wallpaper." = "Не удалось вернуть прежние обои.";
-"Keyboard Shortcuts" = "Сочетания клавиш";
-"Pause or Resume" = "Пауза или продолжение";
-"None" = "Нет";
-"Clear Shortcut" = "Очистить сочетание";
-"Already in Use" = "Уже занято";
-"Type Shortcut…" = "Нажмите сочетание…";
-"Record Shortcut" = "Записать сочетание";
 "Library" = "Медиатека";
 "Add videos to rotate between them or show a different one on each display." = "Добавьте несколько видео, чтобы они сменяли друг друга или на каждом дисплее было свое.";
 "Videos" = "Видео";

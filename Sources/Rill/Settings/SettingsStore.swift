@@ -34,8 +34,6 @@ struct SettingsStore {
         static let shuffle = "shuffle"
         static let syncLockScreen = "syncLockScreen"
         static let savedWallpapers = "savedWallpapers"
-        static let pauseShortcut = "pauseShortcut"
-        static let nextShortcut = "nextShortcut"
         static let volume = "volume"
         static let isMuted = "isMuted"
         static let fillMode = "fillMode"
@@ -88,16 +86,6 @@ struct SettingsStore {
     var savedWallpapers: [String: SavedWallpaper] {
         get { decode(Key.savedWallpapers) ?? [:] }
         nonmutating set { encode(newValue, Key.savedWallpapers) }
-    }
-
-    var pauseShortcut: KeyShortcut? {
-        get { decode(Key.pauseShortcut) }
-        nonmutating set { encode(newValue, Key.pauseShortcut) }
-    }
-
-    var nextShortcut: KeyShortcut? {
-        get { decode(Key.nextShortcut) }
-        nonmutating set { encode(newValue, Key.nextShortcut) }
     }
 
     var pauseWhenSavingPower: Bool {

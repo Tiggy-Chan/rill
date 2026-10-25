@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "Never";
-"Space" = "Space";
 "Next Video" = "Next Video";
 "Show the video on the lock screen" = "Show the video on the lock screen";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off.";
 "Couldn't restore your original wallpaper." = "Couldn't restore your original wallpaper.";
-"Keyboard Shortcuts" = "Keyboard Shortcuts";
-"Pause or Resume" = "Pause or Resume";
-"None" = "None";
-"Clear Shortcut" = "Clear Shortcut";
-"Already in Use" = "Already in Use";
-"Type Shortcut…" = "Type Shortcut…";
-"Record Shortcut" = "Record Shortcut";
 "Library" = "Library";
 "Add videos to rotate between them or show a different one on each display." = "Add videos to rotate between them or show a different one on each display.";
 "Videos" = "Videos";

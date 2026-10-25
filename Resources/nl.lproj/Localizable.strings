@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "Nooit";
-"Space" = "Spatie";
 "Next Video" = "Volgende video";
 "Show the video on the lock screen" = "Toon de video op het toegangsscherm";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Stelt een beeld uit de video in als je macOS-achtergrond, die het toegangsscherm toont. Je eigen achtergrond komt terug als je dit uitschakelt.";
 "Couldn't restore your original wallpaper." = "Kan je oorspronkelijke achtergrond niet herstellen.";
-"Keyboard Shortcuts" = "Toetscombinaties";
-"Pause or Resume" = "Pauzeer of hervat";
-"None" = "Geen";
-"Clear Shortcut" = "Wis toetscombinatie";
-"Already in Use" = "Al in gebruik";
-"Type Shortcut…" = "Typ toetscombinatie…";
-"Record Shortcut" = "Neem toetscombinatie op";
 "Library" = "Bibliotheek";
 "Add videos to rotate between them or show a different one on each display." = "Voeg video's toe om ze af te wisselen of op elk beeldscherm een andere te tonen.";
 "Videos" = "Video's";

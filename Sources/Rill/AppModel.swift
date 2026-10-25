@@ -79,8 +79,6 @@ final class AppModel {
     private(set) var autoPauseReason: PauseReason?
     private(set) var problem: String?
     private(set) var launchAtLogin: SMAppService.Status = SMAppService.mainApp.status
-    private(set) var pauseShortcut: KeyShortcut?
-    private(set) var nextShortcut: KeyShortcut?
 
     var pauseWhenSavingPower = true {
         didSet {
@@ -152,7 +150,6 @@ final class AppModel {
     private let settings: SettingsStore
     private let wallpaper = WallpaperController()
     private let monitor = SystemMonitor()
-    private let hotKeys = HotKeyCenter()
     private let lockScreen: LockScreenSync
     @ObservationIgnored private var resolvedURLs: [UUID: URL] = [:]
     @ObservationIgnored private var active: [UUID: ActivePlayer] = [:]
@@ -177,15 +174,6 @@ final class AppModel {
         wallpaper.onVisibilityChange = { [weak self] in self?.updatePlayback() }
         wallpaper.onScreensChange = { [weak self] in self?.applyAssignments() }
         lockScreen.onError = { [weak self] message in self?.problem = message }
-        hotKeys.handler = { [weak self] action in
-            switch action {
-            case .togglePause: self?.togglePause()
-            case .nextVideo: self?.showNext()
-            }
-        }
-        pauseShortcut = settings.pauseShortcut
-        nextShortcut = settings.nextShortcut
-        registerShortcuts()
         // Covers a quit or crash between turning sync off and the original wallpaper coming back.
         if !syncLockScreen && !settings.savedWallpapers.isEmpty {
             lockScreen.restore()
@@ -447,36 +435,6 @@ final class AppModel {
         } else {
             lockScreen.update(videos: videos)
         }
-    }
-
-    // MARK: - Shortcuts
-
-    /// Returns false when another app already uses the shortcut; the previous one stays in place.
-    @discardableResult
-    func setShortcut(_ shortcut: KeyShortcut?, for action: HotKeyCenter.Action) -> Bool {
-        guard hotKeys.register(shortcut, for: action) else {
-            hotKeys.register(action == .togglePause ? pauseShortcut : nextShortcut, for: action)
-            return false
-        }
-        switch action {
-        case .togglePause:
-            pauseShortcut = shortcut
-            settings.pauseShortcut = shortcut
-        case .nextVideo:
-            nextShortcut = shortcut
-            settings.nextShortcut = shortcut
-        }
-        return true
-    }
-
-    /// Lets the shortcut recorder see keys that are currently registered as shortcuts.
-    func suspendShortcuts() {
-        hotKeys.unregisterAll()
-    }
-
-    func registerShortcuts() {
-        hotKeys.register(pauseShortcut, for: .togglePause)
-        hotKeys.register(nextShortcut, for: .nextVideo)
     }
 
     // MARK: - Launch at login

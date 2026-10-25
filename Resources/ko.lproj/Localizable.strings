@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "안 함";
-"Space" = "스페이스";
 "Next Video" = "다음 비디오";
 "Show the video on the lock screen" = "잠금 화면에 비디오 표시";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "비디오의 정지 화면을 macOS 배경화면으로 설정하며, 잠금 화면에도 표시됩니다. 끄면 원래 배경화면으로 돌아갑니다.";
 "Couldn't restore your original wallpaper." = "원래 배경화면을 복원할 수 없습니다.";
-"Keyboard Shortcuts" = "키보드 단축키";
-"Pause or Resume" = "일시 정지 또는 재개";
-"None" = "없음";
-"Clear Shortcut" = "단축키 지우기";
-"Already in Use" = "이미 사용 중";
-"Type Shortcut…" = "단축키 입력…";
-"Record Shortcut" = "단축키 기록";
 "Library" = "보관함";
 "Add videos to rotate between them or show a different one on each display." = "비디오를 여러 개 추가하면 번갈아 표시하거나 디스플레이마다 다른 비디오를 표시할 수 있습니다.";
 "Videos" = "비디오";

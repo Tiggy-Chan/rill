@@ -5,3 +5,4 @@ build/
 *.mov
 *.m4v
 .DS_Store
+Vendor/

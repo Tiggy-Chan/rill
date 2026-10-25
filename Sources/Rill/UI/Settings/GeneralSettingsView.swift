@@ -27,23 +27,6 @@ struct GeneralSettingsView: View {
                 }
             }
 
-            Section(L10n.shortcuts) {
-                LabeledContent(L10n.pauseOrResume) {
-                    ShortcutRecorder(
-                        shortcut: model.pauseShortcut,
-                        onChange: { model.setShortcut($0, for: .togglePause) },
-                        onRecordingChange: shortcutRecording
-                    )
-                }
-                LabeledContent(L10n.nextVideo) {
-                    ShortcutRecorder(
-                        shortcut: model.nextShortcut,
-                        onChange: { model.setShortcut($0, for: .nextVideo) },
-                        onRecordingChange: shortcutRecording
-                    )
-                }
-            }
-
             Section {
                 Picker(L10n.language, selection: $language) {
                     Text(L10n.systemLanguage(AppLanguage.nativeName(AppLanguage.system))).tag(String?.none)
@@ -70,14 +53,6 @@ struct GeneralSettingsView: View {
         .scrollDisabled(true)
         .fixedSize(horizontal: false, vertical: true)
         .onAppear(perform: model.refreshLaunchAtLogin)
-    }
-
-    private func shortcutRecording(_ recording: Bool) {
-        if recording {
-            model.suspendShortcuts()
-        } else {
-            model.registerShortcuts()
-        }
     }
 }
 

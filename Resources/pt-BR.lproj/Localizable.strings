@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "Nunca";
-"Space" = "Espaço";
 "Next Video" = "Próximo Vídeo";
 "Show the video on the lock screen" = "Mostrar o vídeo na tela bloqueada";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Define um quadro do vídeo como papel de parede do macOS, que aparece na tela bloqueada. Seu papel de parede volta quando você desativa esta opção.";
 "Couldn't restore your original wallpaper." = "Não foi possível restaurar o papel de parede original.";
-"Keyboard Shortcuts" = "Atalhos de Teclado";
-"Pause or Resume" = "Pausar ou Retomar";
-"None" = "Nenhum";
-"Clear Shortcut" = "Limpar Atalho";
-"Already in Use" = "Já em Uso";
-"Type Shortcut…" = "Digite o Atalho…";
-"Record Shortcut" = "Gravar Atalho";
 "Library" = "Biblioteca";
 "Add videos to rotate between them or show a different one on each display." = "Adicione vídeos para alterná-los ou mostrar um diferente em cada tela.";
 "Videos" = "Vídeos";

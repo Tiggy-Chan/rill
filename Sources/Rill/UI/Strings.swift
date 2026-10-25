@@ -56,21 +56,13 @@ enum L10n {
         String(localized: "System Default (\(name))")
     }
 
-    // Library, rotation, displays, shortcuts, lock screen
+    // Library, rotation, displays, lock screen
     static var locale: Locale { Locale(identifier: Bundle.main.preferredLocalizations.first ?? "en") }
     static var never: String { String(localized: "Never") }
-    static var spaceKey: String { String(localized: "Space") }
     static var nextVideo: String { String(localized: "Next Video") }
     static var syncLockScreen: String { String(localized: "Show the video on the lock screen") }
     static var syncLockScreenDetail: String { String(localized: "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off.") }
     static var cantRestoreWallpaper: String { String(localized: "Couldn't restore your original wallpaper.") }
-    static var shortcuts: String { String(localized: "Keyboard Shortcuts") }
-    static var pauseOrResume: String { String(localized: "Pause or Resume") }
-    static var none: String { String(localized: "None") }
-    static var clearShortcut: String { String(localized: "Clear Shortcut") }
-    static var shortcutTaken: String { String(localized: "Already in Use") }
-    static var typeShortcut: String { String(localized: "Type Shortcut…") }
-    static var recordShortcut: String { String(localized: "Record Shortcut") }
     static var library: String { String(localized: "Library") }
     static var libraryEmpty: String { String(localized: "Add videos to rotate between them or show a different one on each display.") }
     static var videos: String { String(localized: "Videos") }

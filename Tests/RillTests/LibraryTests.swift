@@ -108,26 +108,8 @@ struct SettingsMigrationTests {
         store.shuffle = true
         let id = UUID()
         store.displayVideos = ["display": id]
-        let shortcut = KeyShortcut(keyCode: UInt32(kVK_ANSI_P), carbonModifiers: UInt32(cmdKey | optionKey), key: "P")
-        store.pauseShortcut = shortcut
         #expect(store.rotationInterval == .oneHour)
         #expect(store.shuffle)
         #expect(store.displayVideos == ["display": id])
-        #expect(store.pauseShortcut == shortcut)
-        store.pauseShortcut = nil
-        #expect(store.pauseShortcut == nil)
-    }
-}
-
-struct KeyShortcutTests {
-    @Test func displaysModifiersInMacOrder() {
-        let all = UInt32(controlKey | optionKey | shiftKey | cmdKey)
-        #expect(KeyShortcut(keyCode: UInt32(kVK_ANSI_P), carbonModifiers: all, key: "P").displayString == "⌃⌥⇧⌘P")
-    }
-
-    @Test func namesSpecialKeys() {
-        let shortcut = KeyShortcut(keyCode: UInt32(kVK_RightArrow), carbonModifiers: UInt32(optionKey | cmdKey), key: "")
-        #expect(shortcut.displayString == "⌥⌘→")
-        #expect(KeyShortcut(keyCode: UInt32(kVK_F5), carbonModifiers: 0, key: "").displayString == "F5")
     }
 }

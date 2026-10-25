@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "Hiçbir Zaman";
-"Space" = "Boşluk";
 "Next Video" = "Sonraki Video";
 "Show the video on the lock screen" = "Videoyu kilitli ekranda göster";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "Videodan bir kareyi macOS duvar kâğıdınız olarak ayarlar; kilitli ekran bunu gösterir. Bunu kapattığınızda kendi duvar kâğıdınız geri gelir.";
 "Couldn't restore your original wallpaper." = "Orijinal duvar kâğıdınız geri yüklenemedi.";
-"Keyboard Shortcuts" = "Klavye Kestirmeleri";
-"Pause or Resume" = "Duraklat veya Sürdür";
-"None" = "Yok";
-"Clear Shortcut" = "Kestirmeyi Temizle";
-"Already in Use" = "Zaten Kullanılıyor";
-"Type Shortcut…" = "Kestirmeyi Yazın…";
-"Record Shortcut" = "Kestirme Kaydet";
 "Library" = "Kütüphane";
 "Add videos to rotate between them or show a different one on each display." = "Videolar arasında geçiş yapmak veya her ekranda farklı bir video göstermek için video ekleyin.";
 "Videos" = "Videolar";

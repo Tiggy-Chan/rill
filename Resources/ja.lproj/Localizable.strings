@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "しない";
-"Space" = "スペース";
 "Next Video" = "次のビデオ";
 "Show the video on the lock screen" = "ロック画面にビデオを表示";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "ビデオの静止画を macOS の壁紙に設定し、ロック画面にも表示します。オフにすると元の壁紙に戻ります。";
 "Couldn't restore your original wallpaper." = "元の壁紙に戻せませんでした。";
-"Keyboard Shortcuts" = "キーボードショートカット";
-"Pause or Resume" = "一時停止/再開";
-"None" = "なし";
-"Clear Shortcut" = "ショートカットを消去";
-"Already in Use" = "使用中です";
-"Type Shortcut…" = "ショートカットを入力…";
-"Record Shortcut" = "ショートカットを記録";
 "Library" = "ライブラリ";
 "Add videos to rotate between them or show a different one on each display." = "複数のビデオを追加すると、順番に切り替えたり、ディスプレイごとに別のビデオを表示したりできます。";
 "Videos" = "ビデオ";

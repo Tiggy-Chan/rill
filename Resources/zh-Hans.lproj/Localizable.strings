@@ -47,18 +47,10 @@
 
 /* Library, rotation, displays, shortcuts, lock screen */
 "Never" = "从不";
-"Space" = "空格";
 "Next Video" = "下一个视频";
 "Show the video on the lock screen" = "在锁屏上显示视频画面";
 "Sets a still from the video as your macOS wallpaper, which the lock screen shows. Your own wallpaper comes back when you turn this off." = "把视频的一帧设为系统壁纸，锁屏会显示它。关闭后会恢复你原来的壁纸。";
 "Couldn't restore your original wallpaper." = "无法恢复你原来的壁纸。";
-"Keyboard Shortcuts" = "键盘快捷键";
-"Pause or Resume" = "暂停或继续";
-"None" = "无";
-"Clear Shortcut" = "清除快捷键";
-"Already in Use" = "已被占用";
-"Type Shortcut…" = "请按下快捷键…";
-"Record Shortcut" = "录制快捷键";
 "Library" = "视频库";
 "Add videos to rotate between them or show a different one on each display." = "添加多个视频后，可以定时轮换，或在每块显示器上显示不同的视频。";
 "Videos" = "视频";

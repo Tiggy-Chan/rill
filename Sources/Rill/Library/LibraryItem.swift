@@ -9,6 +9,8 @@ struct LibraryItem: Codable, Identifiable, Equatable, Sendable {
     /// size it was made from so replacing the source file invalidates the copy.
     var convertedPath: String?
     var convertedFromSize: Int?
+    /// Which converter wrote the copy; bump to force a rebuild after a fix.
+    var convertedVersion: Int?
 
     init(id: UUID, name: String, bookmark: Data) {
         self.id = id

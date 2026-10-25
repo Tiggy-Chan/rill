@@ -10,6 +10,11 @@ enum RemuxOutcome: Equatable {
 
 /// Where converted copies live and how their freshness is judged.
 enum RemuxStore {
+    /// Bumped whenever the converter's output changes in a way that makes
+    /// existing copies worse than useless (e.g. a timestamp fix); items saved
+    /// by an older converter re-convert automatically.
+    static let formatVersion = 2
+
     /// …/Application Support/Rill/Remux — inside the app container, so no
     /// extra sandbox grants are needed to write or replay the copies.
     static func cacheURL(for id: UUID) -> URL {

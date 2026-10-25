@@ -297,7 +297,7 @@ final class AppModel {
 
     private func needsConversion(_ item: LibraryItem) -> Bool {
         guard containerKinds[item.id]?.needsConversion == true else { return false }
-        guard let path = item.convertedPath else { return true }
+        guard let path = item.convertedPath, item.convertedVersion == RemuxStore.formatVersion else { return true }
         return !RemuxStore.cacheIsCurrent(
             recordedCachePath: path,
             recordedSourceSize: item.convertedFromSize,
@@ -323,6 +323,7 @@ final class AppModel {
             if let size = sourceSizes[id] {
                 library[index].convertedPath = RemuxStore.cacheURL(for: id).path
                 library[index].convertedFromSize = size
+                library[index].convertedVersion = RemuxStore.formatVersion
                 settings.library = library
                 note = nil
                 currentDidChange()
@@ -366,7 +367,7 @@ final class AppModel {
     private func playbackURL(for id: UUID) -> URL? {
         guard let url = resolvedURLs[id], let item = library.first(where: { $0.id == id }) else { return nil }
         guard containerKinds[id]?.needsConversion == true else { return url }
-        guard let path = item.convertedPath else { return nil }
+        guard let path = item.convertedPath, item.convertedVersion == RemuxStore.formatVersion else { return nil }
         guard RemuxStore.cacheIsCurrent(
             recordedCachePath: path,
             recordedSourceSize: item.convertedFromSize,

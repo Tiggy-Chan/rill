@@ -67,6 +67,7 @@ enum Remuxer {
             DispatchQueue.global(qos: .utility).async {
                 // The copy reads the source under sandbox access held for its duration.
                 let access = SecurityScopedAccess(source)
+                defer { _ = access }
                 let partial = destination.appendingPathExtension("part")
                 try? FileManager.default.createDirectory(
                     at: partial.deletingLastPathComponent(), withIntermediateDirectories: true
@@ -82,7 +83,9 @@ enum Remuxer {
                         }
                     }
                 }
-                let message = String(cString: detail)
+                let message = detail.withUnsafeBufferPointer { ptr in
+                    ptr.baseAddress.map { String(cString: $0) } ?? ""
+                }
                 switch code {
                 case Int32(RILL_REMUX_OK):
                     do {

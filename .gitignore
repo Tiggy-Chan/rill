@@ -6,4 +6,7 @@ Vendor/
 *.mov
 *.m4v
 .DS_Store
-Vendor/
+.claude/
+.zcode/
+AGENTS.md
+HANDOFF.md

@@ -1,8 +1,21 @@
-[English](README.md) | **简体中文**
+<div align="center">
+
+<img src="assets/icon.png" width="128" height="128" alt="Rill 图标">
 
 # Rill
 
-Rill 是一个小巧的 macOS 原生应用，可以把视频设为桌面壁纸。它只在菜单栏显示图标，平时不打扰你，壁纸看不见时会自动暂停。
+**小巧优雅的 macOS 原生视频壁纸应用。**<br>
+常驻菜单栏，不打扰工作，不可见时自动暂停，近乎零能耗。
+
+[English](README.md) · [简体中文](README.zh-CN.md) · [下载发布版](https://github.com/Tiggy-Chan/rill/releases)
+
+<br>
+
+<img src="assets/screenshot-zh.png" width="340" alt="Rill 菜单栏控制面板预览">
+
+<br>
+
+</div>
 
 ## 功能
 

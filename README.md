@@ -1,8 +1,21 @@
-**English** | [简体中文](README.zh-CN.md)
+<div align="center">
+
+<img src="assets/icon.png" width="128" height="128" alt="Rill Icon">
 
 # Rill
 
-A small native macOS app that plays video as your desktop wallpaper. It lives in the menu bar, stays out of your way, and pauses itself when nobody can see it.
+**A minimal native macOS app that plays video as your desktop wallpaper.**<br>
+Lives in the menu bar, stays out of your way, and pauses itself when nobody can see it.
+
+[English](README.md) · [简体中文](README.zh-CN.md) · [Releases](https://github.com/Tiggy-Chan/rill/releases)
+
+<br>
+
+<img src="assets/screenshot.png" width="340" alt="Rill Menu Bar Panel Preview">
+
+<br>
+
+</div>
 
 ## Features
 

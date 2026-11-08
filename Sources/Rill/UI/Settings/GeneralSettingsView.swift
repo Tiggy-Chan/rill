@@ -48,6 +48,20 @@ struct GeneralSettingsView: View {
                     }
                 }
             }
+
+            Section {
+                Link(destination: URL(string: "https://github.com/Tiggy-Chan/rill")!) {
+                    HStack {
+                        Text("Rill")
+                        Text("by Tiggy-Chan")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Image(systemName: "arrow.up.right")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+                    }
+                }
+            }
         }
         .formStyle(.grouped)
         .scrollDisabled(true)

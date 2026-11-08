@@ -22,20 +22,24 @@ A small native macOS app that plays video as your desktop wallpaper. It lives in
 - macOS 14 Sonoma or later
 - To build: a Swift 6 toolchain, from Xcode 16 or later or just the Command Line Tools (`xcode-select --install`)
 
-## Build and install
+## Install
 
-There are no prebuilt releases yet, so build it from source:
+Download `Rill-0.1.0.dmg` from [GitHub Releases](https://github.com/Tiggy-Chan/rill/releases), open the disk image, and drag Rill to your Applications folder.
+
+*Note: The app is ad-hoc signed and not notarized. If macOS blocks it on first launch, right-click `Rill.app` in Finder and select **Open**, or run `xattr -cr /Applications/Rill.app`.*
+
+### Build from source
+
+You can also build from source with just the Command Line Tools (`xcode-select --install`):
 
 ```sh
 git clone https://github.com/Tiggy-Chan/rill.git
 cd rill
 ./Scripts/fetch-ffmpeg.sh       # builds the bundled FFmpeg libraries once (~2 minutes)
-./Scripts/build.sh              # creates build/Rill.app
+./Scripts/build.sh              # creates build/Rill.app (or ./Scripts/package-dmg.sh for a DMG)
 cp -R build/Rill.app /Applications/
 open /Applications/Rill.app
 ```
-
-The app is ad-hoc signed and not notarized. It opens normally on the Mac that built it. If you copy it to another Mac, Gatekeeper may block it.
 
 ## Usage
 

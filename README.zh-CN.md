@@ -22,20 +22,24 @@ Rill 是一个小巧的 macOS 原生应用，可以把视频设为桌面壁纸�
 - macOS 14 Sonoma 或更高版本
 - 编译需要 Swift 6 工具链：安装 Xcode 16 或更高版本，或者只装命令行工具（`xcode-select --install`）
 
-## 编译和安装
+## 安装
 
-目前还没有预编译的版本，需要从源码编译：
+从 [GitHub Releases](https://github.com/Tiggy-Chan/rill/releases) 下载最新版 `Rill-0.1.0.dmg`，打开磁盘映像并将 Rill 拖入「应用程序」文件夹即可。
+
+*注：应用为 ad-hoc 签名且未经公证。首次打开若遇到系统安全提示，可在访达中右键点击 `Rill.app` 选择「打开」，或在终端执行 `xattr -cr /Applications/Rill.app`。*
+
+### 从源码编译
+
+也可以只装命令行工具（`xcode-select --install`）直接编译：
 
 ```sh
 git clone https://github.com/Tiggy-Chan/rill.git
 cd rill
 ./Scripts/fetch-ffmpeg.sh       # 先编译内置的 FFmpeg 库（约 2 分钟，一次即可）
-./Scripts/build.sh              # 生成 build/Rill.app
+./Scripts/build.sh              # 生成 build/Rill.app（或执行 ./Scripts/package-dmg.sh 打包 DMG）
 cp -R build/Rill.app /Applications/
 open /Applications/Rill.app
 ```
-
-应用只做了 ad-hoc 签名，没有经过公证。在编译它的那台 Mac 上可以直接打开；拷贝到别的 Mac 上可能会被 Gatekeeper 拦截。
 
 ## 使用方法
 
